@@ -62,20 +62,6 @@ class Content(models.Model):
     class Meta:
         ordering = ['order']
 
-class Content(models.Model):
-    module = models.ForeignKey(Module,
-                               related_name='contents',
-                               on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType,
-                               on_delete=models.CASCADE,
-                               limit_choices_to={'model__in':(
-                                     'text',
-                                     'video',
-                                     'image',
-                                     'file')})
-    object_id = models.PositiveIntegerField()
-    item = GenericForeignKey('content_type', 'object_id')
-
 class ItemBase(models.Model):
     owner = models.ForeignKey(User,
                          related_name='%(class)s_related',
