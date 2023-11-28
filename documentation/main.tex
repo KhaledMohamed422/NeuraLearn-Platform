@@ -1,0 +1,43 @@
+%% document class
+\documentclass[14pt, a4paper]{extreport}
+
+%% packages 
+\input{settings/packages}
+
+%% page settings 
+\input{settings/page}
+
+%% own commands 
+\newcommand{\tbi}[1]{\textbf{\textit{#1}}}
+\input{settings/macros}
+
+%--------------------------------------------------------
+\begin{document}
+
+\input{content/title_page}
+
+\pagestyle{plain}
+
+\begin{abstract}
+NeuraLearnAcademy - Revolutionizing Distance Learning with AI-Enhanced Tools
+In response to the persistent challenges faced by learners in online education platforms, 
+NeuraLearnAcademy emerges as an innovative solution, pioneering a paradigm 
+shift in the landscape of distance learning.
+
+This electronic platform harnesses the power of advanced technologies, specifically Large Language Model (LLM) and Machine Learning (ML), to address and overcome
+the limitations inherent in existing online learning environments.
+introduces a suite of tools and features meticulously designed to enhance the learning experience	
+The platform tackles the issues of low engagement through interactive elements
+such as quizzes, discussions. It addresses the inadequacies of assessment methods by incorporating a range of evaluation techniques, ensuring a comprehensive understanding of the course material.
+\end{abstract}
+
+\tableofcontents 
+\listoffigures  
+
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+
+
+\end{document}
