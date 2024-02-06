@@ -1,2 +1,63 @@
 \chapter{System Analysis}
-% all diagrams will be here
+
+\section{System Requirements}
+A requirement is simply a statement of what the system must do or what characteristics
+it needs to have. During a systems development project, requirements will be created
+that describe what the business needs (business requirements), what the users
+need to do (user requirements), what the software should do (functional requirements),
+characteristics the system should have (nonfunctional requirements), and how
+the system should be built (system requirements).
+
+\subsection{Functional Requirements}
+Functional requirements are the specifications of the product’s functions
+(features). In another words, functional requirements define what precisely a
+software must do and how the system must respond to inputs. Functional
+requirements define the software's goals, meaning that the software will not work if
+these requirements are not met.
+\begin{enumerate}
+    \customitem{Authentication}
+        \begin{enumerate}[label*=\arabic*.]
+            \item The system will allow users to create an account.
+            \item The system must validate users credentials to login.
+            \item Users should have the ability to reset their passwords in case of forgotten credentials. 
+        \end{enumerate}
+    \customitem{Enroll Courses}
+        \begin{enumerate}[label*=\arabic*.]
+            \item Students can enroll courses and see course content
+              We will extend this to enroll paid course wit credit card, debit card etc. in the future.
+        \end{enumerate}
+    \item \textbf{Course Managment} \hfill
+        \begin{enumerate}[label*=\arabic*.]
+            \item Instructors can create a course and upload to our website.
+            \item Instructors can upload various types of course content, including text, multimedia, and documents.
+            \item Only authorized instructors should have the ability to modify or update course content.
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Non-Functional Requirements}
+Non-functional Requirements define system attributes such as security,
+reliability, performance, maintainability, scalability, and usability. They serve as
+constraints or restrictions on the design of the system across the different backlogs.
+Also known as system qualities, non-functional requirements are just as critical as
+functional requirements. They ensure the usability and effectiveness of the entire
+system. They specify criteria that judge the operation of a system, rather than specific
+behaviors.
+
+\begin{itemize}
+    \customitem{Performance} \vspace{0.2cm} \\
+        The application should be able to handle large numbers of concurrent users.  
+    \customitem{Security} \vspace{0.2cm} \\
+        The application should protect user data from
+        unauthorized access or theft.
+    \customitem{Scalability} \vspace{0.2cm} \\
+        The application should be able to handle an increasing number of users and services.
+    \customitem{User-friendliness} \vspace{0.2cm} \\
+        The application should be easy to use and navigate, with
+        clear instructions and explanations of the analysis process.
+    \customitem{Privacy} \vspace{0.2cm} \\
+        The application should have a clear privacy policy and
+        should not retain user data
+    
+\end{itemize}
+
+\section{Process of Requirements }

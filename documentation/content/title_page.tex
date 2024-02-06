@@ -1,69 +1,26 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Academic Title Page
-% LaTeX Template
-% Version 2.0 (17/7/17)
-%
-% This template was downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% WikiBooks (LaTeX - Title Creation) with modifications by:
-% Vel (vel@latextemplates.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-% 
-% Instructions for using this template:
-% This title page is capable of being compiled as is. This is not useful for 
-% including it in another document. To do this, you have two options: 
-%
-% 1) Copy/paste everything between \begin{document} and \end{document} 
-% starting at \begin{titlepage} and paste this into another LaTeX file where you 
-% want your title page.
-% OR
-% 2) Remove everything outside the \begin{titlepage} and \end{titlepage}, rename
-% this file and move it to the same directory as the LaTeX file you wish to add it to. 
-% Then add \input{./<new filename>.tex} to your LaTeX file where you want your
-% title page.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
-%\documentclass[11pt]{article}
-%
-%\usepackage[utf8]{inputenc} % Required for inputting international characters
-%\usepackage[T1]{fontenc} % Output font encoding for international characters
-%
-%\usepackage{mathpazo} % Palatino font
-%
-%\begin{document}
-
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
-
-\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+\begin{titlepage} 
 	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
 	
+	\begin{center}
+		\begin{minipage}{0.15\textwidth}%
+			\includegraphics[width=2.2cm]{content/Logo copy.png}
+		\end{minipage}
+		\begin{minipage}{0.69\textwidth}%
+			\center
+			\textsc{\large  Computer And Artificial Intelligence}\\[0.5cm]
+			\textsc{\normalsize Graduation Project}\\[0.5cm]
+		\end{minipage}\hfill
+		\begin{minipage}{0.15\textwidth}%
+			\includegraphics[width=2.2cm]{content/faculty.png}
+        \end{minipage}
+	\end{center}
+
 	\center % Centre everything on the page
-	
-	%------------------------------------------------
-	%	Headings
-	%------------------------------------------------
-	
-	\textsc{\LARGE  Computer And Artificial Intelligence}\\[1.5cm] % Main heading such as the name of your university/college
-	
-	\textsc{\Large Fayoum University}\\[0.5cm] % Major heading such as course name
-	
-	\textsc{\large Graduation Project}\\[0.5cm] % Minor heading such as course title
 	
 	%------------------------------------------------
 	%	Title
 	%------------------------------------------------
-	\vspace{5mm}
+	\vspace{3cm}
 	\HRule\\[0.4cm]
 	
 	{\huge\bfseries Neura Learn Academy}\\[0.4cm] % Title of your document
@@ -75,31 +32,25 @@
 	%------------------------------------------------
 	\begin{spacing}{1}
 		\begin{center}
-			\textbf{\large Mahmoud  \\ Bassem \\ Kareem \\ 
-			Sherif \\ Badwy \\ Beshoy}
+			\large
+			Khaled Mohamad Fathy \\
+			Mahmoud Ahmad Zitony\\ 
+			Sherif Shehata humam\\
+			Bassem Yahia Abd Allatif\\
+			Kareem Abd AlAthem\\ 
+			Mohamad Ashraf Badwy \\
+			Beshoy Tag Makram
 			\vspace{50mm}
 		\end{center}
 	\end{spacing}
-		
-	\begin{minipage}{0.4\textwidth}
-		\begin{flushleft}
-			\large
-			\textit{Author}\\
-			\textsc{Eng. Khaled Mohamed} % Your name
-		\end{flushleft}
-	\end{minipage}
-	~
-	\begin{minipage}{0.4\textwidth}
-		\begin{flushright}
+
+	\begin{minipage}{\textwidth}
+		\begin{center}
 			\large
 			\textit{Supervisor}\\
-			Dr. Gehad \textsc{hassan} % Supervisor's name
-		\end{flushright}
+			Dr. Gehad \textsc{hassan}
+		\end{center}
 	\end{minipage}
-	
-	% If you don't want a supervisor, uncomment the two lines below and comment the code above
-	%{\large\textit{Author}}\\
-	%John \textsc{Smith} % Your name
 	
 	%------------------------------------------------
 	%	Date
@@ -109,19 +60,6 @@
 	
 	{\large\today} % Date, change the \today to a set date if you want to be precise
 	
-	%------------------------------------------------
-	%	Logo
-	%------------------------------------------------
-	
-	%\vfill\vfill
-	%\includegraphics[width=0.2\textwidth]{placeholder.jpg}\\[1cm] % Include a department/university logo - this will require the graphicx package
-	 
-	%----------------------------------------------------------------------------------------
-	
 	\vfill % Push the date up 1/4 of the remaining page
 	
 \end{titlepage}
-
-%----------------------------------------------------------------------------------------
-
-%\end{document}
