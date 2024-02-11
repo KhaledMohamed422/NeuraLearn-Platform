@@ -61,13 +61,54 @@ behaviors.
     
 \end{itemize}
 
+\newpage
+
+\section{Exploring Trade-offs Architectures}
+\begin{itemize}
+    \item Sequence to sequence models (LSTM-GRU-RNN):
+    \begin{itemize}
+        \item Difficulty in Incorporating Domain Knowledge 
+        \item Limited Interpretability
+        \item Handling Varied Output Lengths
+    \end{itemize}
+    \item Encoder-Decoder Transformer:
+    \begin{itemize}
+        \item Transformer architecture, with self-attention mechanisms, has been widely used in Seq2Seq tasks.
+        \item It does come with some potential disadvantages, including high training costs.
+        \item Alternative way Fine-Tuning and Transfer Learning.
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[max height=\textheight,max width=\textwidth]{figures/transformer.jpeg}
+	\caption{Transformer}
+\end{figure}
 % \section{Proposed Model}
-\begin{figure}[h]
+
+\begin{figure}[h!]
 	\centering
 	\includegraphics[max height=\textheight,max width=\textwidth]{figures/proposal-model.jpeg}
 	\caption{Proposed Model}
 \end{figure}
 
+\newpage
+\noindent
+The motivation behind designing a large language model with adaptive layers lies in the pursuit of creating a model that can efficiently and effectively adapt to the complexities and nuances of different datasets and tasks
+
+\subsection{Flexibility Across Diverse Tasks:}
+
+Adaptive layers enhance the model's flexibility to handle various natural language processing tasks. Whether it's text classification, language translation, sentiment analysis, or any other task, the adaptive layers allow the model to dynamically adjust its parameters based on the specific requirements of each task.
+
+\subsection{Optimizing for Different Data Distributions:}
+
+Different datasets may exhibit varying data distributions and characteristics. Adaptive layers provide a mechanism for the model to adapt its learning rates or normalization parameters dynamically, optimizing its performance for the specific patterns present in the data.
+
+
+
+\subsection{Enhanced Convergence and Training Speed:}
+
+Adaptive learning rate methods contribute to faster convergence during training. By adapting learning rates for individual parameters, the model can converge more quickly, leading to reduced training times and improved overall efficiency.
 \section{Use Case Analysis}
 A Use Case is a type of behavioral representation that shows the interactions
 between a system and its users, or actors. It is used to represent and model the
