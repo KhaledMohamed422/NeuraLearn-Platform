@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 
     # apps
     'courses.apps.CoursesConfig',
+    'users.apps.UsersConfig',
 
     # third-parties 
     'django_extensions',
-
 ]
 
 MIDDLEWARE = [
@@ -143,3 +143,5 @@ REST_FRAMEWORK = {
       'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+AUTH_USER_MODEL = 'users.UserAccount'
