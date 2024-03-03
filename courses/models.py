@@ -1,7 +1,10 @@
+import uuid
 from django.db import models
 from users.models import UserAccount as User 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.text import slugify
+from .utils import unique_slug_generator
 from .fields import OrderField
 
 class Subject(models.Model):
@@ -11,6 +14,13 @@ class Subject(models.Model):
     class Meta:
         ordering = ['title']
 
+    def get_total_courses(self):
+        return self.courses.count()
+    
+    def save(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return self.title
 
@@ -32,6 +42,13 @@ class Course(models.Model):
     class Meta:
         ordering = ['-created']
 
+    def get_total_modules(self):
+        return self.modules.count()
+    
+    def save(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -40,12 +57,17 @@ class Module(models.Model):
                                related_name='modules',
                                on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField(blank=True)
     order = OrderField(blank=True, for_fields=['course'])
 
     class Meta:
         ordering = ['order']
 
+    def save(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        super().save(*args, **kwargs)
+        
     def __str__(self):
         return f'{self.order}. {self.title}'
 
@@ -68,6 +90,7 @@ class Content(models.Model):
         ordering = ['order']
 
 class ItemBase(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(User,
                          related_name='%(class)s_related',
                          on_delete=models.CASCADE)
