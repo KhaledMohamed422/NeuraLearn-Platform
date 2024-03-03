@@ -1,0 +1,25 @@
+version: '2.21'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  web:
+    build: .
+    command: ["./wait-for-it.sh", "db:5432", "--",
+            "python", "/code/manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=NeuraLearn.settings.prod
+    env_file:
+      - .env
+    depends_on:
+      - db
