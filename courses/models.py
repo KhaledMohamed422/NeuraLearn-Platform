@@ -34,13 +34,22 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
     students = models.ManyToManyField(User,
                                   related_name='courses_joined',
                                   blank=True)
+    image = models.ImageField(upload_to='courses/%Y/%m/%d/', blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True)
+    available = models.BooleanField(default=False)
+    updated = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         ordering = ['-created']
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['title'])
+        ]
 
     def get_total_modules(self):
         return self.modules.count()

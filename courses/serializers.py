@@ -7,6 +7,7 @@ from .models import Subject, Course, Module, Content, Text, File, Video, Image
 #---------------------
 class ManageCourseSerializer(serializers.ModelSerializer):
     slug = serializers.ReadOnlyField()
+    detail_url = serializers.SerializerMethodField(read_only=True)
     create_url = serializers.SerializerMethodField(read_only=True)
     edit_url = serializers.SerializerMethodField(read_only=True)
     delete_url = serializers.SerializerMethodField(read_only=True)
@@ -19,11 +20,23 @@ class ManageCourseSerializer(serializers.ModelSerializer):
             'title',
             'slug', 
             'overview',
+            'price',
+            'image',
+            'available',
+            'created',
+            'updated',
+            'detail_url',
             'create_url',
             'edit_url',
             'delete_url',
             'modules_url',
         ]
+    
+    def get_detail_url(self, obj):
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse("courses:manage_course_detail", kwargs={"slug": obj.slug}, request=request)
 
     def get_create_url(self, obj):
         request = self.context.get('request')
@@ -59,6 +72,9 @@ class CourseSerializer(serializers.ModelSerializer):
             'title',
             'slug', 
             'overview',
+            'price',
+            'available',
+            'image',
         ]
 
 

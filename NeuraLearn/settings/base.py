@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-mc@%rvw!bj^co@u7s+ha3nj3_l0%c%um=k#ye$k$g=^g3*9e-)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     # apps
     'courses.apps.CoursesConfig',
     'users.apps.UsersConfig',
+    'public.apps.PublicConfig',
+    'students.apps.StudentsConfig',
 
     # third-parties 
     'django_extensions',
