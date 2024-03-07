@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
 
     # third-parties 
+    'corsheaders',
     'django_extensions',
     'djoser',
     'rest_framework',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -66,6 +68,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'NeuraLearn.urls'
+# CORS_URLS_REGEX = r"^/api/.*"
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://localhost:3000',
+]
 
 TEMPLATES = [
     {
@@ -136,8 +143,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
@@ -167,9 +176,6 @@ DJOSER = {
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000/google', 'http://localhost:8000/facebook'],
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializer',
-        'user': 'users.serializers.UserCreateSerializer',
-        'current_user': 'users.serializers.UserCreateSerializer',
-        'user_delete': 'djoser.serializers.UserDeleteSerializer',
     }
 }
 
@@ -177,13 +183,4 @@ DJOSER = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Rest Framework Conf.
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-      'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ]
-}
-
 AUTH_USER_MODEL = 'users.UserAccount'

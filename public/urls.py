@@ -8,5 +8,7 @@ urlpatterns = [
     path('subject/<slug:subject>/',
         views.CourseListAPIView.as_view(),
         name='course_list_subject'),
-    path('course/<slug:slug>/detail/', views.CourseDetailAPIView.as_view(), name='course_detail'),
+    path('course/<slug:slug>/detail/', 
+        views.CourseDetailAPIView.as_view(),
+        name='course_detail')
 ]

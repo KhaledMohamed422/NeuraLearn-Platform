@@ -7,6 +7,7 @@ class CourseSerializer(serializers.ModelSerializer):
     instructor = serializers.SerializerMethodField()
     detail_url = serializers.SerializerMethodField()
     slug = serializers.ReadOnlyField()
+
     class Meta:
         model = Course
         fields = [

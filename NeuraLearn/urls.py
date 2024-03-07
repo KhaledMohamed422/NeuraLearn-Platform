@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/courses/', include('courses.urls', namespace='api')),
     path('api/public/', include('public.urls', namespace='api-public')),
+    path('api/students/', include('students.urls', namespace='api-students')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 ]

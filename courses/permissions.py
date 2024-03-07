@@ -10,9 +10,3 @@ class IsCourseOwnerPermission(DjangoModelPermissions, BasePermission):
 class IsModuleOwnerPermission(DjangoModelPermissions, BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.course.owner == request.user
-
-# check if the user performing the request is present in the students relationship of the Course object.
-class IsEnrolled(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.students.filter(id=request.user.id).exists()
-    

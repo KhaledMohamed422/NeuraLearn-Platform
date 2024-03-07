@@ -18,7 +18,8 @@ class Subject(models.Model):
         return self.courses.count()
     
     def save(self, *args, **kwargs):
-        self.slug = unique_slug_generator(self)
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
         super().save(*args, **kwargs)
     
     def __str__(self):
@@ -55,7 +56,8 @@ class Course(models.Model):
         return self.modules.count()
     
     def save(self, *args, **kwargs):
-        self.slug = unique_slug_generator(self)
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -74,7 +76,8 @@ class Module(models.Model):
         ordering = ['order']
 
     def save(self, *args, **kwargs):
-        self.slug = unique_slug_generator(self)
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
         super().save(*args, **kwargs)
         
     def __str__(self):
@@ -117,10 +120,10 @@ class Text(ItemBase):
     content = models.TextField()
 
 class File(ItemBase):
-    file = models.FileField(upload_to='files')
+    file = models.FileField(upload_to='files/%Y/%m/%d/')
 
 class Image(ItemBase):
-    file = models.FileField(upload_to='images')
+    file = models.FileField(upload_to='images/%Y/%m/%d/')
 
 class Video(ItemBase):
     url = models.URLField()
