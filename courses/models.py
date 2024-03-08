@@ -34,7 +34,7 @@ class Course(models.Model):
                                 on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    overview = models.TextField()
+    overview = models.TextField(max_length=5000)
     students = models.ManyToManyField(User,
                                   related_name='courses_joined',
                                   blank=True)
@@ -117,7 +117,7 @@ class ItemBase(models.Model):
         return self.title
     
 class Text(ItemBase):
-    content = models.TextField()
+    content = models.TextField(max_length=5000)
 
 class File(ItemBase):
     file = models.FileField(upload_to='files/%Y/%m/%d/')

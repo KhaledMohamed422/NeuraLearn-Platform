@@ -5,10 +5,24 @@ from .models import Subject, Course, Module, Content, Text, File, Video, Image
 #---------------------
 # Courses Serializers
 #---------------------
+class CourseSerializer(serializers.ModelSerializer):
+    slug = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Course
+        fields = [
+            'subject', 
+            'title',
+            'slug', 
+            'overview',
+            'price',
+            'image',
+        ]
+
 class ManageCourseSerializer(serializers.ModelSerializer):
+    subject = serializers.StringRelatedField()
     slug = serializers.ReadOnlyField()
     detail_url = serializers.SerializerMethodField(read_only=True)
-    create_url = serializers.SerializerMethodField(read_only=True)
     edit_url = serializers.SerializerMethodField(read_only=True)
     delete_url = serializers.SerializerMethodField(read_only=True)
     modules_url = serializers.SerializerMethodField(read_only=True)
@@ -22,11 +36,9 @@ class ManageCourseSerializer(serializers.ModelSerializer):
             'overview',
             'price',
             'image',
-            'available',
             'created',
             'updated',
             'detail_url',
-            'create_url',
             'edit_url',
             'delete_url',
             'modules_url',
@@ -38,12 +50,6 @@ class ManageCourseSerializer(serializers.ModelSerializer):
             return None
         return reverse("courses:manage_course_detail", kwargs={"slug": obj.slug}, request=request)
 
-    def get_create_url(self, obj):
-        request = self.context.get('request')
-        if request is None:
-            return None
-        return reverse("courses:course_create", request=request)
-    
     def get_edit_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -62,8 +68,12 @@ class ManageCourseSerializer(serializers.ModelSerializer):
             return None
         return reverse("courses:manage_course_modules_list", kwargs={"slug": obj.slug}, request=request)
 
-class CourseSerializer(serializers.ModelSerializer):
+class CourseDetailSerializer(serializers.ModelSerializer):
+    subject = serializers.StringRelatedField()
     slug = serializers.ReadOnlyField()
+    edit_url = serializers.SerializerMethodField(read_only=True)
+    delete_url = serializers.SerializerMethodField(read_only=True)
+    modules_url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Course
@@ -73,11 +83,31 @@ class CourseSerializer(serializers.ModelSerializer):
             'slug', 
             'overview',
             'price',
-            'available',
             'image',
+            'created',
+            'updated',
+            'edit_url',
+            'delete_url',
+            'modules_url',
         ]
-
-
+    
+    def get_edit_url(self, obj):
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse("courses:course_edit", kwargs={"slug": obj.slug}, request=request)
+    
+    def get_delete_url(self, obj):
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse("courses:course_delete", kwargs={"slug": obj.slug}, request=request)
+    
+    def get_modules_url(self, obj):
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse("courses:manage_course_modules_list", kwargs={"slug": obj.slug}, request=request)
 #---------------------
 # Modules Serializers
 #---------------------

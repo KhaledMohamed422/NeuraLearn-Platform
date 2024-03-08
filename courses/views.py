@@ -2,13 +2,17 @@ from rest_framework import generics, permissions
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import get_object_or_404
 from django.apps import apps
-from .permissions import IsCourseOwnerPermission, IsModuleOwnerPermission
 from .mixins import CourseOwnerMixin
 from .models import Course, Module, Content
+from .permissions import ( 
+    IsModuleOwnerPermission,
+    IsInstructorPermission,
+)
 from .serializers import (
     ManageCourseSerializer,
     CourseSerializer,
     CourseModuleSerializer,
+    CourseDetailSerializer,
     ModuleSerializer,
     ModuleContentSerializer,
     TextSerializer,
@@ -24,36 +28,38 @@ from .serializers import (
 class CourseListAPIView(CourseOwnerMixin, generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = ManageCourseSerializer
+    permission_classes = [IsInstructorPermission]
 
 class CourseCreateAPIView(generics.CreateAPIView):
     queryset = Course.objects.all()
-    serializer_class = ManageCourseSerializer
+    serializer_class = CourseSerializer
+    permission_classes = [IsInstructorPermission]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class CourseDetailAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
     queryset = Course.objects.all()
-    serializer_class = ManageCourseSerializer
-    permession_classes = [permissions.IsAdminUser, IsCourseOwnerPermission]
+    serializer_class = CourseDetailSerializer
+    permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
  
 class CourseUpdateAPIView(CourseOwnerMixin, generics.RetrieveUpdateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permession_classes = [permissions.IsAdminUser, IsCourseOwnerPermission]
+    permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
 
 class CourseDeleteAPIView(CourseOwnerMixin, generics.RetrieveDestroyAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permession_classes = [permissions.IsAdminUser, IsCourseOwnerPermission]
+    permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
 
 class CourseModulesListAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseModuleSerializer
-    permession_classes = [permissions.IsAdminUser, IsCourseOwnerPermission]
+    permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
 
 
