@@ -24,6 +24,13 @@
 7. Migrate existing db tables by running `python manage.py migrate`
 8. Run the django development server using `python manage.py runserver`
 
+## Installation With Docker
+1. Clone the repository
+2. Run the following command to start the Docker containers `docker-compose up`
+3. Apply the migrations to the database `docker compose exec web python /code/manage.py migrate`
+4. Load some initial data `docker compose exec web python /code/manage.py loaddata mysite_data.json`
+5. Access the app at [http://localhost:8000](http://localhost:8000)
+
 ## End Points 
 End Points  is accessible in /users/urls.py
 ## Run & Test 
@@ -127,3 +134,317 @@ if not error
 - `{'Expired': 'Please Create new cookie.'}`
 - 
 ---------
+
+- ## `Creating a course`
+|Method|Endpoint|
+|------|---|
+|POST|`/api/courses/create/`| 
+
+
+**Request**
+```json
+{
+  "subject": 1, // Required
+  "title": "Introduction to Programming", // Required
+  "overview": "A comprehensive course on programming  concepts.",  // Required
+  "price": 29.99,  // Required
+  "image": "image"  // Optional 
+}
+```
+
+**Response**
+* A course object response with a 200 OK status.
+
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'subject': ['Incorrect type. Expected pk value, received str.']}`
+    - `{'subject': ['Invalid pk - object does not exist.']} 400` 
+    - `{'subject': ['This field may not be null.'] 400`
+    - `{'title': ['This field may not be blank.']} 400`
+    - `{'title': ['Ensure this field has no more than 200 characters.']} 400`
+    - `{'overview': ['Ensure this field has no more than 5000 characters.']}`
+     - `{'overview': ['This field may not be blank.']} 400`
+    - `{'price': ['Ensure that there are no more than 10 digits in total.']} 400`
+    - `{'price': ['A valid number is required.']} 400`
+    - `"{image": [ "Upload a valid image. The file you uploaded was either not an image or a corrupted image."]}`
+-----
+- ## `Instructor List My courses`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/courses/mine/?limit=x&offset=x`|
+
+
+**Request**
+- No request body is required for this endpoint.
+
+**Response**
+
+* A list of courses owned by the authenticated instructor with a 200 OK status.
+
+* Example 
+```json
+{
+  "count": 19,
+  "next": null,
+  "previous": "previous": "http:/localhost:8000/api/courses/mine/?limit=10",
+  "results": [
+    {
+      "subject": "Programming",
+      "title": "dsafdf",
+      "slug": "dsafdf-l4nn",
+      "overview": "sdfs",
+      "price": "1.00",
+      "image": null,
+      "created": "2024-03-08T13:16:41.088005Z",
+      "updated": "2024-03-08T13:16:41.088141Z",
+      "detail_url": "http://localhost:8000/api/courses/dsafdf-l4nn/detail/",
+      "edit_url": "http://localhost:8000/api/courses/dsafdf-l4nn/edit/",
+      "delete_url": "http://localhost:8000/api/courses/dsafdf-l4nn/delete/",
+      "modules_url": "http://localhost:8000/api/courses/dsafdf-l4nn/modules/"
+    },
+    // ... additional course objects
+  ]
+}
+
+```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+-------
+- ## `Course Detail`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/courses/<slug>/detail/`|
+
+**Response**
+* A course object response with a 200 OK status.
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+---------
+- ## `Instructor edit course`
+|Method|Endpoint|
+|------|---|
+|PUT|`/api/courses/<slug>/edit/`|
+
+**Response**
+* A course object response with a 200 OK status.
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+    - `{'subject': ['Incorrect type. Expected pk value, received str.']}`
+    - `{'subject': ['Invalid pk - object does not exist.']} 400` 
+    - `{'subject': ['This field may not be null.'] 400`
+    - `{'title': ['This field may not be blank.']} 400`
+    - `{'title': ['Ensure this field has no more than 200 characters.']} 400`
+    - `{'overview': ['Ensure this field has no more than 5000 characters.']}`
+     - `{'overview': ['This field may not be blank.']} 400`
+    - `{'price': ['Ensure that there are no more than 10 digits in total.']} 400`
+    - `{'price': ['A valid number is required.']} 400`
+    - `{image": [ "Upload a valid image. The file you uploaded was either not an image or a corrupted image."]}`
+-----------
+- ## `Instructor delete course`
+|Method|Endpoint|
+|------|---|
+|DELETE|`/api/courses/<slug>/delete/`|
+
+**Response**
+* A Empty Response 200 OK status.
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+
+--------------
+- ## `List Modules Of a Course`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/courses/<slug>/modules/`|
+
+**Response**
+* A course object with modules response with a 200 OK status.
+
+* Example
+    ```json
+    {
+        "title": "dsafdf",
+        "create_new_module_url": "http://localhost:8000/api/courses/dsafdf-ez8o/module/create/",
+        "modules": [
+            {
+                "title": "first module",
+                "description": "this is module",
+                "slug": "first-module",
+                "edit_url": "http://localhost:8000/api/courses/module/first-module/update/",
+                "delete_url": "http://localhost:8000/api/courses/module/first-module/delete/",
+                "contents_url": "http://localhost:8000/api/courses/module/first-module/contents/"
+            },
+            {
+                "title": "another module",
+                "description": "this is another module",
+                "slug": "another-module",
+                "edit_url": "http://localhost:8000/api/courses/module/another-module/update/",
+                "delete_url": "http://localhost:8000/api/courses/module/another-module/delete/",
+                "contents_url": "http://localhost:8000/api/courses/module/another-module/contents/"
+            }
+        ]
+    } 
+    ```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+-----------
+- ## `Create New Module Of a Course`
+|Method|Endpoint|
+|------|---|
+|POST|`/api/courses/<slug:slug>/module/create/`|
+
+**Request**
+```json
+{
+  "title": "Introduction to Programming", // Required
+  "description": "A comprehensive course on programming  concepts.",  // Optional
+}
+```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'title': ['This field may not be blank.']} 400`
+    - `{'title': ['Ensure this field has no more than 200 characters.']} 400`
+    - `{'Description': ['Ensure this field has no more than 5000 characters.']}`
+------------
+- ## `Edit Module Of a Course`
+|Method|Endpoint|
+|------|---|
+|PUT|`/api/courses/module/<slug:slug>/update/`|
+
+**Request**
+```json
+{
+  "title": "Introduction to Programming", // Required
+  "description": "A comprehensive course on programming  concepts.",  // Optional
+}
+```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+    - `{'title': ['This field may not be blank.']} 400`
+    - `{'title': ['Ensure this field has no more than 200 characters.']} 400`
+    - `{'Description': ['Ensure this field has no more than 5000 characters.']}`
+-----------
+- ## `Delete Module Of a Course`
+|Method|Endpoint|
+|------|---|
+|DELETE|`/api/courses/module/<slug:slug>/delete/`|
+
+**Request**
+
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+----------
+- ## `List Content Of a Module`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/courses/module/<slug>/contents/`|
+
+**Response**
+* A Module object with its contents response with a 200 OK status.
+
+* Example
+    ```json
+    {
+    "title": "sdfads",
+    "add_text_url": "http://localhost:8000/api/courses/module/sdfads/content/text/create/",
+    "add_file_url": "http://localhost:8000/api/courses/module/sdfads/content/file/create/",
+    "add_image_url": "http://localhost:8000/api/courses/module/sdfads/content/image/create/",
+    "add_video_url": "http://localhost:8000/api/courses/module/sdfads/content/video/create/",
+    "contents": [
+        {
+            "text": {
+                "title": "asdf",
+                "content": "asdf",
+                "edit_url": "http://localhost:8000/api/courses/module/content/text/480d7e96-9d36-43d0-9d01-5c9a6491e72e/",
+                "delete_url": "http://localhost:8000/api/courses/module/content/text/480d7e96-9d36-43d0-9d01-5c9a6491e72e/"
+            }
+        },
+        {
+            "image": {
+                "title": "this is image content",
+                "file": "http://localhost:8000/media/images/2024/03/09/test.jpg",
+                "edit_url": "http://localhost:8000/api/courses/module/content/image/7882e2b7-9024-4e96-8d2d-61c295c06275/",
+                "delete_url": "http://localhost:8000/api/courses/module/content/image/7882e2b7-9024-4e96-8d2d-61c295c06275/"
+            }
+        }
+    ]
+    }
+    ```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+
+------------
+- ## `Create New Content Of a Module`
+|Method|Endpoint|
+|------|---|
+|POST|`/api/courses/module/<module_slug>/content/<content_name>/create/`|
+
+**Request**
+* For text
+    ```json
+    {
+    "title": "Introduction to Programming", // Required
+    "content": "A comprehensive course on programming  concepts.",  // Required
+    }
+    ```
+* For file
+    ```json
+    {
+    "title": "Introduction to Programming", // Required
+    "file": "file",  // Required
+    }
+    ```
+* For image
+    ```json
+    {
+    "title": "Introduction to Programming", // Required
+    "file": "image",  // Required
+    }
+    ```
+* For video
+    ```json
+    {
+    "title": "Introduction to Programming", // Required
+    "file": "video",  // Required
+    }
+    ```
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'title': ['This field may not be blank.']} 400`
+    - `{'title': ['Ensure this field has no more than 200 characters.']} 400`
+    - `{'content': ['Ensure this field has no more than 5000 characters.']} 400`
+    - `{"file": ["File extension “XY” is not allowed. Allowed extensions are: mp4."]} 400`
+    - `{"file": ["File extension “XY” is not allowed. Allowed extensions are: jpeg."]} 400`
+---------
+- ## `Edit Content`
+|Method|Endpoint|
+|------|---|
+|PUT|`/api/courses/module/content/<content_name>/uuid/`|
+
+**Request**
+Same request of creation
+
+* Errors
+    same errors of create content
+------------
+- ## `Delete Content`
+|Method|Endpoint|
+|------|---|
+|DELETE|`/api/courses/module/content/<content_name>/uuid/`|
