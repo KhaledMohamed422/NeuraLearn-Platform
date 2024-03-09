@@ -69,7 +69,7 @@ class CourseModulesListAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
 class ModuleCreateAPIView(generics.CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permession_classes = [permissions.IsAdminUser]
+    permission_classes = [IsInstructorPermission]
     
     def perform_create(self, serializer):
         slug = self.kwargs.get('slug')
@@ -81,7 +81,7 @@ class ModuleCreateAPIView(generics.CreateAPIView):
 class ModuleRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [permissions.IsAdminUser, IsModuleOwnerPermission]
+    permission_classes = [IsInstructorPermission]
 
     def get_object(self):
         slug = self.kwargs.get('slug')
@@ -90,7 +90,7 @@ class ModuleRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
 class ModuleRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [permissions.IsAdminUser, IsModuleOwnerPermission]
+    permission_classes = [IsInstructorPermission]
     
     def get_object(self):
         slug = self.kwargs.get('slug')
@@ -99,16 +99,21 @@ class ModuleRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 class ModuleContentListAPIView(generics.RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleContentSerializer
-    lookup_field = 'slug'
+    permission_classes = [IsInstructorPermission]
+
+    def get_object(self):
+        slug = self.kwargs.get('slug')
+        return get_object_or_404(Module, slug=slug, course__owner=self.request.user)
 
 
 #------------------
 # Content API Views
 #------------------
-class ContentCreateAPIView(generics.ListCreateAPIView):
+class ContentCreateAPIView(generics.CreateAPIView):
     module = None 
     model = None
     queryset = None
+    permission_classes = [IsInstructorPermission]
 
     def get_model(self, model_name):
         if model_name in ['text', 'video', 'image', 'file']:
@@ -149,7 +154,7 @@ class ContentCreateAPIView(generics.ListCreateAPIView):
 class ContentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     model = None
     obj = None 
-    queryset = None
+    permission_classes = [IsInstructorPermission]
 
     def get_model(self, model_name):
         if model_name in ['text', 'video', 'image', 'file']:
@@ -173,15 +178,17 @@ class ContentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
         model_name = kwargs.get('model_name')
         uuid = kwargs.get('uuid')
         self.model = self.get_model(model_name)
-        if id:
-            self.obj = get_object_or_404(self.model,
+        self.obj = get_object_or_404(Content,
                                          uuid=uuid,
-                                         owner=request.user)
+                                         module__course__owner=request.user)
         return super().dispatch(request, *args, **kwargs)
     
     def get_queryset(self):
-        qs = self.model.objects.all()
-        return qs
+        return None
     
     def get_object(self):
-        return self.obj
+        return self.obj.item
+
+    def perform_destroy(self, instance):
+        self.obj.item.delete()
+        self.obj.delete()

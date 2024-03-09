@@ -14,7 +14,7 @@ class ImageSerializer(serializers.ModelSerializer):
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['title', 'url']
+        fields = ['title', 'file']
 
 class FileSerializer(serializers.ModelSerializer):
     class Meta:

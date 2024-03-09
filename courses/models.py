@@ -4,6 +4,7 @@ from users.models import UserAccount as User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.text import slugify
+from django.core.validators import FileExtensionValidator
 from .utils import unique_slug_generator
 from .fields import OrderField
 
@@ -69,7 +70,7 @@ class Module(models.Model):
                                on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     order = OrderField(blank=True, for_fields=['course'])
 
     class Meta:
@@ -84,6 +85,7 @@ class Module(models.Model):
         return f'{self.order}. {self.title}'
 
 class Content(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     module = models.ForeignKey(Module,
                                related_name='contents',
                                on_delete=models.CASCADE)
@@ -102,7 +104,6 @@ class Content(models.Model):
         ordering = ['order']
 
 class ItemBase(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(User,
                          related_name='%(class)s_related',
                          on_delete=models.CASCADE)
@@ -120,10 +121,12 @@ class Text(ItemBase):
     content = models.TextField(max_length=5000)
 
 class File(ItemBase):
-    file = models.FileField(upload_to='files/%Y/%m/%d/')
+    file = models.FileField(upload_to='files/%Y/%m/%d/',
+                            validators=[FileExtensionValidator(['pdf'])])
 
 class Image(ItemBase):
-    file = models.FileField(upload_to='images/%Y/%m/%d/')
+    file = models.ImageField(upload_to='images/%Y/%m/%d/')
 
 class Video(ItemBase):
-    url = models.URLField()
+    file = models.FileField(upload_to='videos/%Y/%m/%d/',
+                            validators=[FileExtensionValidator(['mp4'])])

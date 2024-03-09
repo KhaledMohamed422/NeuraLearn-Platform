@@ -38,9 +38,7 @@ class StudentCourseDetailView(generics.RetrieveAPIView):
         return Response(data, status=status.HTTP_200_OK)
 
 class CourseEnrollView(APIView):
-    authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    
     def post(self, request, slug, format=None):
         course = get_object_or_404(Course, slug=slug)
         course.students.add(request.user)

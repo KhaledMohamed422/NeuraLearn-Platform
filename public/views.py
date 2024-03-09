@@ -6,6 +6,8 @@ from .serializers import CourseSerializer, CourseModuleSerializer
 class CourseListAPIView(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    authentication_classes = []
+    permission_classes = []
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -19,6 +21,8 @@ class CourseListAPIView(generics.ListAPIView):
 class CourseDetailAPIView(generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseModuleSerializer
+    authentication_classes = []
+    permission_classes = []
     lookup_field = 'slug'
 
     def get_queryset(self):

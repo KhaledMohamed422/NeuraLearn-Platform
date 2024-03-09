@@ -176,43 +176,28 @@ class CourseModuleSerializer(serializers.ModelSerializer):
 # Contents Serializers
 #---------------------
 class TextSerializer(serializers.ModelSerializer):
-    edit_url = serializers.SerializerMethodField(read_only=True)
-    delete_url = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = Text
-        fields = ['title', 'content', 'edit_url', 'delete_url']
+        fields = ['title', 'content']
     
-    def get_edit_url(self, obj):
-        request = self.context.get('request')
-        if request is None:
-            return None
-        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": "text"}, request=request)
-
-    def get_delete_url(self, obj):
-        request = self.context.get('request')
-        if request is None:
-            return None
-        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": "text"}, request=request)
-   
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        exclude = ['id', 'owner', 'created', 'updated']
+        fields = ['title', 'file']
 
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        exclude = ['id', 'owner', 'created', 'updated']
+        fields = ['title', 'file']
 
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
-        exclude = ['id', 'owner', 'created', 'updated']
+        fields = ['title', 'file']
 
 class ManageContentSerializer(serializers.ModelSerializer):
     item = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Content
         fields = ['item']
@@ -221,7 +206,7 @@ class ManageContentSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         item_data = representation['item']
         model_name = instance.item.__class__.__name__.lower()
-        return {model_name: item_data}
+        return { model_name: item_data }
     
     def get_item(self, obj):
         item = obj.item
@@ -239,8 +224,27 @@ class ManageContentSerializer(serializers.ModelSerializer):
         else:
             return None
         # Serialize the object using the chosen serializer
-        serializer = serializer_class(instance=item)
-        return serializer.data
+        request = self.context.get('request')
+        serializer = serializer_class(instance=item, context={"request": request})
+        serializer_data = dict(serializer.data)
+        serializer_data["edit_url"] = self.get_edit_url(obj)
+        serializer_data["delete_url"] = self.get_delete_url(obj)
+        return serializer_data
+
+    def get_edit_url(self, obj):
+        request = self.context.get('request')
+        model_name = obj.item.__class__.__name__.lower()
+        if request is None:
+            return None
+        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": f"{model_name}"}, request=request)
+
+    def get_delete_url(self, obj):
+        request = self.context.get('request')
+        model_name = obj.item.__class__.__name__.lower()
+        if request is None:
+            return None
+        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": f"{model_name}"}, request=request)
+ 
 
 class ModuleContentSerializer(serializers.ModelSerializer):
     contents = ManageContentSerializer(many=True, read_only=True)
