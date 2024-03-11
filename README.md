@@ -28,7 +28,7 @@
 1. Clone the repository
 2. Run the following command to start the Docker containers `docker-compose up`
 3. Apply the migrations to the database `docker compose exec web python /code/manage.py migrate`
-4. Load some initial data `docker compose exec web python /code/manage.py loaddata mysite_data.json`
+4. Load some initial data `docker compose exec web python /code/manage.py loaddata subjects.json`
 5. Access the app at [http://localhost:8000](http://localhost:8000)
 
 ## End Points 
