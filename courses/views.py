@@ -1,5 +1,6 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, views, status
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from django.apps import apps
 from .mixins import CourseOwnerMixin
@@ -13,6 +14,7 @@ from .serializers import (
     CourseSerializer,
     CourseModuleSerializer,
     CourseDetailSerializer,
+    CourseAvailableSerializer,
     ModuleSerializer,
     ModuleContentSerializer,
     TextSerializer,
@@ -37,6 +39,35 @@ class CourseCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+class CoursePublishView(views.APIView):
+    permission_classes = [IsInstructorPermission]
+
+    def put(self, request, slug, format=None):
+        user = self.request.user
+        course = get_object_or_404(Course, slug=slug, owner=user)
+        if course.available:
+            return Response({"Error": "Course is already published"}, 
+                            status=status.HTTP_400_BAD_REQUEST)
+        course.available = True
+        course.save()
+        serializer = CourseAvailableSerializer(course)
+        return Response(serializer.data)
+    
+class CourseUnPublishView(views.APIView):
+    permission_classes = [IsInstructorPermission]
+
+    def put(self, request, slug, format=None):
+        user = self.request.user
+        course = get_object_or_404(Course, slug=slug, owner=user)
+        if not course.available:
+            return Response({"Error": "Course is already unpublished"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        course.available = False
+        course.save()
+        serializer = CourseAvailableSerializer(course)
+        return Response(serializer.data)
 
 class CourseDetailAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
     queryset = Course.objects.all()

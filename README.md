@@ -258,6 +258,32 @@ if not error
     - `{'detail': 'You do not have permission to perform this action.'} 403`
     - `{'detail': 'Not found.'} 404`
 
+- ## `Instructor Publish course`
+|Method|Endpoint|
+|------|---|
+|PUT|`/api/courses/<slug>/publish/`|
+
+**Response**
+* A Course object with available attribute displayed with 200 OK status.
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+    - `{"Error": "Course is already published"} 400`
+
+- ## `Instructor UnPublish course`
+|Method|Endpoint|
+|------|---|
+|PUT|`/api/courses/<slug>/unpublish/`|
+
+**Response**
+* A Course object with available attribute displayed with 200 OK status.
+* Errors
+    - `{'detail': 'Authentication credentials were not provided.'} 403`
+    - `{'detail': 'You do not have permission to perform this action.'} 403`
+    - `{'detail': 'Not found.'} 404`
+    - `{"Error": "Course is already unpublished"} 400`
+
 --------------
 - ## `List Modules Of a Course`
 |Method|Endpoint|

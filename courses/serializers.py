@@ -108,6 +108,13 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         if request is None:
             return None
         return reverse("courses:manage_course_modules_list", kwargs={"slug": obj.slug}, request=request)
+
+class CourseAvailableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['id', 'title', 'available']
+
+        
 #---------------------
 # Modules Serializers
 #---------------------
