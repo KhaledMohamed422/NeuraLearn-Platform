@@ -448,3 +448,159 @@ Same request of creation
 |Method|Endpoint|
 |------|---|
 |DELETE|`/api/courses/module/content/<content_name>/uuid/`|
+
+- ## `List available courses in to public (without authentication)`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/public/courses/?limit=2&offset=2`|
+
+
+**Request**
+- No request body is required for this endpoint.
+
+**Response**
+
+* A list of avaliable with a 200 OK status.
+
+* Example 
+```json
+{
+    "count": 5,
+    "next": "http://localhost:8000/api/public/courses/?limit=2&offset=4",
+    "previous": "http://localhost:8000/api/public/courses/?limit=2",
+    "results": [
+        {
+            "subject": "Programming",
+            "title": "dsafdf",
+            "image": null,
+            "instructor": "mahmoud",
+            "slug": "dsafdf-tbvv",
+            "overview": "sdfs",
+            "price": "1.00",
+            "detail_url": "http://localhost:8000/api/public/course/dsafdf-tbvv/detail/"
+        },
+        {
+            "subject": "Programming",
+            "title": "dsafdf",
+            "image": null,
+            "instructor": "mahmoud",
+            "slug": "dsafdf-xlzq",
+            "overview": "sdfs",
+            "price": "1.00",
+            "detail_url": "http://localhost:8000/api/public/course/dsafdf-xlzq/detail/"
+        }
+    ]
+}
+```
+-------
+- ## `List available courses in to public (without authentication) filter with subject`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/public/subject/<slug:subject>/?limit=2&offset=2`|
+
+
+**Request**
+- No request body is required for this endpoint.
+
+**Response**
+
+* A list of avaliable filtered with subject with a 200 OK status.
+
+* Example 
+```json
+{
+    "count": 5,
+    "next": "http://localhost:8000/api/public/courses/?limit=2&offset=4",
+    "previous": "http://localhost:8000/api/public/courses/?limit=2",
+    "results": [
+        {
+            "subject": "Programming",
+            "title": "dsafdf",
+            "image": null,
+            "instructor": "mahmoud",
+            "slug": "dsafdf-tbvv",
+            "overview": "sdfs",
+            "price": "1.00",
+            "detail_url": "http://localhost:8000/api/public/course/dsafdf-tbvv/detail/"
+        },
+        {
+            "subject": "Programming",
+            "title": "dsafdf",
+            "image": null,
+            "instructor": "mahmoud",
+            "slug": "dsafdf-xlzq",
+            "overview": "sdfs",
+            "price": "1.00",
+            "detail_url": "http://localhost:8000/api/public/course/dsafdf-xlzq/detail/"
+        }
+    ]
+}
+```
+-------
+
+- ## `See course detail`
+|Method|Endpoint|
+|------|---|
+|GET|`/api/public/course/<course_slug>/detail/`|
+
+
+**Request**
+- No request body is required for this endpoint.
+
+**Response**
+
+* A detail of Course with 200 OK status.
+
+* Example 
+```json
+{
+    "title": "dsafdf",
+    "overview": "sdfs",
+    "image": null,
+    "price": "1.00",
+    "instructor": "mahmoud",
+    "enrollments": 1,
+    "updated": "2024-03-13T08:08:10.279792Z",
+    "modules": [
+        {
+            "title": "module",
+            "description": "moduel",
+            "slug": "module",
+            "contents": [
+                {
+                    "text": {
+                        "title": "dsfasd f"
+                    }
+                },
+                {
+                    "file": {
+                        "title": "this is file"
+                    }
+                },
+                {
+                    "file": {
+                        "title": "sdf"
+                    }
+                },
+                {
+                    "image": {
+                        "title": "image"
+                    }
+                },
+                {
+                    "video": {
+                        "title": "dsaf"
+                    }
+                }
+            ]
+        },
+        {
+            "title": "module 2",
+            "description": "moduel 2",
+            "slug": "module-2",
+            "contents": []
+        }
+    ]
+}
+```
+-------
