@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'redisboard',
 ]
 
 MIDDLEWARE = [
@@ -193,11 +192,17 @@ DJOSER = {
     }
 }
 
+# Swagger Documentation 
 SPECTACULAR_SETTINGS = {
     'TITLE': "NeuraLearn Academy"
 }
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.UserAccount'
+
+# Machine Learning Conf.
+TRANSCRIPT_MODEL_URL = config("TRANSCRIPT_MODEL_URL")
+TRANSCRIPT_TOKEN = config("TRANSCRIPT_TOKEN")

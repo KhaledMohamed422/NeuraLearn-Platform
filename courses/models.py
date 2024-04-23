@@ -130,3 +130,5 @@ class Image(ItemBase):
 class Video(ItemBase):
     file = models.FileField(upload_to='videos/%Y/%m/%d/',
                             validators=[FileExtensionValidator(['mp4'])])
+    transcript = models.TextField(null=True, blank=True)
+    summariztion = models.TextField(null=True, blank=True)
