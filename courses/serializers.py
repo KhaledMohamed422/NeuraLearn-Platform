@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from .models import Subject, Course, Module, Content, Text, File, Video, Image
+from drf_spectacular.utils import extend_schema_field
 
 #---------------------
 # Courses Serializers
@@ -44,24 +45,28 @@ class ManageCourseSerializer(serializers.ModelSerializer):
             'modules_url',
         ]
     
+    @extend_schema_field(str)
     def get_detail_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:manage_course_detail", kwargs={"slug": obj.slug}, request=request)
 
+    @extend_schema_field(str)
     def get_edit_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:course_edit", kwargs={"slug": obj.slug}, request=request)
     
+    @extend_schema_field(str)
     def get_delete_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:course_delete", kwargs={"slug": obj.slug}, request=request)
     
+    @extend_schema_field(str)
     def get_modules_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -90,19 +95,22 @@ class CourseDetailSerializer(serializers.ModelSerializer):
             'delete_url',
             'modules_url',
         ]
-    
+
+    @extend_schema_field(str)
     def get_edit_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:course_edit", kwargs={"slug": obj.slug}, request=request)
     
+    @extend_schema_field(str)
     def get_delete_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:course_delete", kwargs={"slug": obj.slug}, request=request)
     
+    @extend_schema_field(str)
     def get_modules_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -135,18 +143,21 @@ class ManageModuleSerializer(serializers.ModelSerializer):
             'contents_url',
         ]
 
+    @extend_schema_field(str)
     def get_edit_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:module_update", kwargs={"slug": obj.slug}, request=request)
-
+    
+    @extend_schema_field(str)
     def get_delete_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:module_delete", kwargs={"slug": obj.slug}, request=request)
     
+    @extend_schema_field(str)
     def get_contents_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -172,6 +183,7 @@ class CourseModuleSerializer(serializers.ModelSerializer):
         model = Course
         fields = ['title', 'create_new_module_url', 'modules']
     
+    @extend_schema_field(str)
     def get_create_new_module_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -271,24 +283,27 @@ class ModuleContentSerializer(serializers.ModelSerializer):
             'contents',
         ]
     
+    @extend_schema_field(str)
     def get_add_text_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "text"}, request=request)
-        
+
+    @extend_schema_field(str)   
     def get_add_file_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "file"}, request=request)
-        
+    @extend_schema_field(str)   
     def get_add_image_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
         return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "image"}, request=request)
-        
+
+    @extend_schema_field(str)   
     def get_add_video_url(self, obj):
         request = self.context.get('request')
         if request is None:

@@ -2,6 +2,8 @@ from rest_framework import generics, permissions, views, status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
+from django.http import Http404
+from drf_spectacular.utils import extend_schema
 from django.apps import apps
 from .mixins import CourseOwnerMixin
 from .models import Course, Module, Content
@@ -27,11 +29,13 @@ from .serializers import (
 #------------------
 # Courses API Views
 #------------------
+@extend_schema(tags=['Courses'])
 class CourseListAPIView(CourseOwnerMixin, generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = ManageCourseSerializer
     permission_classes = [IsInstructorPermission]
 
+@extend_schema(tags=['Courses'])
 class CourseCreateAPIView(generics.CreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -40,7 +44,8 @@ class CourseCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-class CoursePublishView(views.APIView):
+@extend_schema(tags=['Courses'])
+class CoursePublishView(generics.GenericAPIView):
     permission_classes = [IsInstructorPermission]
 
     def put(self, request, slug, format=None):
@@ -53,8 +58,9 @@ class CoursePublishView(views.APIView):
         course.save()
         serializer = CourseAvailableSerializer(course)
         return Response(serializer.data)
-    
-class CourseUnPublishView(views.APIView):
+
+@extend_schema(tags=['Courses'])   
+class CourseUnPublishView(generics.GenericAPIView):
     permission_classes = [IsInstructorPermission]
 
     def put(self, request, slug, format=None):
@@ -69,24 +75,28 @@ class CourseUnPublishView(views.APIView):
         serializer = CourseAvailableSerializer(course)
         return Response(serializer.data)
 
+@extend_schema(tags=['Courses'])
 class CourseDetailAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseDetailSerializer
     permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
  
-class CourseUpdateAPIView(CourseOwnerMixin, generics.RetrieveUpdateAPIView):
+@extend_schema(tags=['Courses'])
+class CourseUpdateAPIView(CourseOwnerMixin, generics.UpdateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
 
-class CourseDeleteAPIView(CourseOwnerMixin, generics.RetrieveDestroyAPIView):
+@extend_schema(tags=['Courses'])
+class CourseDeleteAPIView(CourseOwnerMixin, generics.DestroyAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permession_classes = [permissions.IsAdminUser, IsInstructorPermission]
     lookup_field = 'slug'
 
+@extend_schema(tags=['Modules'])
 class CourseModulesListAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseModuleSerializer
@@ -97,6 +107,7 @@ class CourseModulesListAPIView(CourseOwnerMixin, generics.RetrieveAPIView):
 #------------------
 # Modules API Views
 #------------------
+@extend_schema(tags=['Modules'])
 class ModuleCreateAPIView(generics.CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
@@ -109,7 +120,8 @@ class ModuleCreateAPIView(generics.CreateAPIView):
             raise PermissionDenied("You don't have permission")
         serializer.save(course=course)
 
-class ModuleRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+@extend_schema(tags=['Modules'])
+class ModuleUpdateAPIView(generics.UpdateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
     permission_classes = [IsInstructorPermission]
@@ -118,7 +130,8 @@ class ModuleRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
         slug = self.kwargs.get('slug')
         return get_object_or_404(Module, slug=slug, course__owner=self.request.user)
 
-class ModuleRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+@extend_schema(tags=['Modules'])
+class ModuleDestroyAPIView(generics.DestroyAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
     permission_classes = [IsInstructorPermission]
@@ -127,6 +140,7 @@ class ModuleRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
         slug = self.kwargs.get('slug')
         return get_object_or_404(Module, slug=slug, course__owner=self.request.user)
 
+@extend_schema(tags=['Contents'])
 class ModuleContentListAPIView(generics.RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleContentSerializer
@@ -140,6 +154,8 @@ class ModuleContentListAPIView(generics.RetrieveAPIView):
 #------------------
 # Content API Views
 #------------------
+
+@extend_schema(tags=['Contents'])
 class ContentCreateAPIView(generics.CreateAPIView):
     module = None 
     model = None
@@ -171,6 +187,8 @@ class ContentCreateAPIView(generics.CreateAPIView):
                                        slug=slug,
                                        course__owner=self.request.user)
         self.model = self.get_model(model_name)
+        if self.model is None:
+            raise Http404("Model not found")
         return super().dispatch(request, *args, **kwargs)
     
     def perform_create(self, serializer):
@@ -181,7 +199,8 @@ class ContentCreateAPIView(generics.CreateAPIView):
     def get_queryset(self):
         qs = self.model.objects.all()
         return qs
-   
+
+@extend_schema(tags=['Contents'])
 class ContentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     model = None
     obj = None 

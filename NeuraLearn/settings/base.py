@@ -48,12 +48,14 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
 
     # third-parties 
+    'drf_spectacular',
     'corsheaders',
     'django_extensions',
     'djoser',
     'rest_framework',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    'redisboard',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Caches
+# Make sure REDIS server is running.
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379',
+#     }
+# }
 
 ROOT_URLCONF = 'NeuraLearn.urls'
 # CORS_URLS_REGEX = r"^/api/.*"
@@ -146,9 +157,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'NeuraLearn.pagination.LimitOffsetPagination',
 }
 
@@ -180,6 +193,9 @@ DJOSER = {
     }
 }
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': "NeuraLearn Academy"
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
