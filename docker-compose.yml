@@ -9,6 +9,20 @@ services:
       - POSTGRES_DB=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  # cache:
+  #   image: redis
+  #   restart: always
+  #   volumes:
+  #     - ./data/cache:/data
+  
+  rappitmq:
+    image: rabbitmq:management
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   web:
     build: .
     command: ["./wait-for-it.sh", "db:5432", "--",
@@ -17,9 +31,11 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+      - "5555:5555"
     environment:
       - DJANGO_SETTINGS_MODULE=NeuraLearn.settings.prod
     env_file:
       - .env
     depends_on:
       - db
+      # - cache

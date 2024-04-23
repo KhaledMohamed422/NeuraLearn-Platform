@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /code
 
 # Install dependencies
+RUN apt-get -y update && apt-get -y install ffmpeg
 RUN pip install --upgrade pip
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
