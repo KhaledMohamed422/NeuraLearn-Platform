@@ -18,18 +18,21 @@
 2. Clone the repository
 3. create a virtual environment using `virtualenv venv`
 4. Activate the virtual environment by running `source venv/bin/activate`
-- On Windows use `source venv\Scripts\activate`
+- On Windows use `.\venv\Scripts\activate`
 5. Install the dependencies using `pip install -r requirements.txt`
-6. Make migration existing db tables by running `python manage.py makemigrations`
-7. Migrate existing db tables by running `python manage.py migrate`
-8. Run the django development server using `python manage.py runserver`
+6. Make migration existing db tables by running `python manage.py makemigrations users --settings=NeuraLearn.settings.local`
+7. Migrate existing db tables by running `python manage.py migrate --settings=NeuraLearn.settings.local`
+8. Run the django development server using `python manage.py runserver --settings=NeuraLearn.settings.local`
 
 ## Installation With Docker
 1. Clone the repository
 2. Run the following command to start the Docker containers `docker-compose up`
 3. Apply the migrations to the database `docker compose exec web python /code/manage.py migrate`
-4. Load some initial data `docker compose exec web python /code/manage.py loaddata subjects.json`
-5. Access the app at [http://localhost:8000](http://localhost:8000)
+4. Create superuser (optional) `docker compose exec web python /code/manage.py createsuperuser`
+5. Load some initial data `docker compose exec web python /code/manage.py loaddata courses.json`
+6. Run celery worker`docker compose exec web celery -A NeuraLearn worker -l info`
+7. Run flower to monitor celery tasks`docker compose exec web celery -A NeuraLearn flower`
+8. Access the app at [http://localhost:8000](http://localhost:8000)
 
 ## End Points 
 End Points  is accessible in /users/urls.py
