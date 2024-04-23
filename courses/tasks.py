@@ -25,6 +25,7 @@ def convert_video_to_audio(video_path, audio_path):
     except subprocess.CalledProcessError as e:
         raise RuntimeError(f"FFmpeg command failed with error code {e.returncode}.") from e
 
+
 # Celery Tasks
 @shared_task
 def transcript(id):
