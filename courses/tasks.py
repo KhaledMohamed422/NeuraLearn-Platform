@@ -14,7 +14,7 @@ headers = {"Authorization": f"Bearer {TOKEN}"}
 
 def convert_video_to_audio(video_path, audio_path):
     """
-    Run FFmpeg command to extract audio from video and convert it to MP3
+    Run FFmpeg command to extract audio from the video
     """
     if os.path.exists(audio_path):
         print(f"Audio file already exists at {audio_path}")
@@ -29,7 +29,7 @@ def convert_video_to_audio(video_path, audio_path):
 @shared_task
 def transcript(id):
     """
-    extract text from videos task and save in database
+    extract text from videos and save it in database
     """
     try:
         # Get the course by id
