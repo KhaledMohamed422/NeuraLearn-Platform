@@ -76,7 +76,8 @@ if not error
 **Response:**
 
 if Not error 
-- `{"activated": 'Account activated successfully' }`
+- `{"activated": 'Account activated successfully' }` 
+
 if error
 - if token is expired: `{'Expired': 'Please retry reset sign-up.'}`
 ---
