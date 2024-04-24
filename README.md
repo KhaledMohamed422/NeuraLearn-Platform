@@ -75,9 +75,10 @@ if not error
 
 **Response:**
 
-if error 
+if Not error 
 - `{"activated": 'Account activated successfully' }`
-- if token is expired: `{'Expired': 'Please Create new cookie.'}`
+if error
+- if token is expired: `{'Expired': 'Please retry reset sign-up.'}`
 ---
 - ## `User Login - Getting JWT Tokens`
 |Method|End-Point|
