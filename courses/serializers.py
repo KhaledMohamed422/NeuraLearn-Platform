@@ -3,6 +3,11 @@ from rest_framework.reverse import reverse
 from .models import Subject, Course, Module, Content, Text, File, Video, Image
 from drf_spectacular.utils import extend_schema_field
 
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = ['id', 'title', 'slug']
+    
 #---------------------
 # Courses Serializers
 #---------------------

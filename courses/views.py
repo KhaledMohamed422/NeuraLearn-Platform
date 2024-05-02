@@ -6,7 +6,7 @@ from django.http import Http404
 from drf_spectacular.utils import extend_schema
 from django.apps import apps
 from .mixins import CourseOwnerMixin
-from .models import Course, Module, Content
+from .models import Course, Module, Content, Subject
 from .permissions import ( 
     IsModuleOwnerPermission,
     IsInstructorPermission,
@@ -23,8 +23,14 @@ from .serializers import (
     FileSerializer,
     ImageSerializer,
     VideoSerializer,
+    SubjectSerializer,
 )
 
+
+class SubjectListView(generics.ListAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    pagination_class = None
 
 #------------------
 # Courses API Views
