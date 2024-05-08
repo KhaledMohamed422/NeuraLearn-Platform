@@ -1,0 +1,56 @@
+[
+{
+  "model": "users.useraccount",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$zIRYL0lt2l04CCFHQIvm9k$iqfvDlf9uX9yWb24uEwjU7Uxio31QG9kYy7Rj1maU+c=",
+    "last_login": "2024-05-08T11:49:37.064Z",
+    "is_superuser": true,
+    "email": "mahmoudzaytoni2002@gmail.com",
+    "first_name": "Mahmoud",
+    "last_name": "Ahmad",
+    "is_active": true,
+    "is_staff": true,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.useraccount",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$bGxHQuaX7D7PSeCQC3TRJ3$rY8wY9GI93SXI9BMJlqmZGARi3MVryJfePpO4BYpEqY=",
+    "last_login": null,
+    "is_superuser": false,
+    "email": "test@gmail.com",
+    "first_name": "Envato",
+    "last_name": "Tuts",
+    "is_active": true,
+    "is_staff": false,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.useraccount",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$JvnnTRLLSM8hbS0wo2EJZi$/Mv7vZHFstsAvTn1YtinAPV34JKP9B02LWOKlv1qXB4=",
+    "last_login": null,
+    "is_superuser": true,
+    "email": "by1123@fayoum.edu.eg",
+    "first_name": "Bassem",
+    "last_name": "Yahia",
+    "is_active": true,
+    "is_staff": true,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+}
+]

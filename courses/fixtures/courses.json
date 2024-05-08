@@ -1,0 +1,231 @@
+[
+{
+  "model": "courses.subject",
+  "pk": 1,
+  "fields": {
+    "title": "Mathematics",
+    "slug": "mathematics"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 2,
+  "fields": {
+    "title": "Physics",
+    "slug": "physics"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 3,
+  "fields": {
+    "title": "Programming",
+    "slug": "programming"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 4,
+  "fields": {
+    "title": "Managment",
+    "slug": "managment"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 5,
+  "fields": {
+    "title": "Data Science",
+    "slug": "data-science"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 6,
+  "fields": {
+    "title": "Design",
+    "slug": "design"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 7,
+  "fields": {
+    "title": "Finance",
+    "slug": "finance"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 8,
+  "fields": {
+    "title": "Marketing",
+    "slug": "marketing"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 9,
+  "fields": {
+    "title": "Hardware",
+    "slug": "hardware"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 10,
+  "fields": {
+    "title": "Electronics",
+    "slug": "electronics"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "owner": 2,
+    "subject": 3,
+    "title": "30 Days to Learn HTML & CSS (Full Course)",
+    "slug": "30-days-to-learn-html-css-full-course",
+    "overview": "Even if your goal is not to become a web designer, learning HTML and CSS can be an amazing tool to have in your skill-set -- both in the workplace, and at home. If this has been on your to-do list for some time, why don't you take thirty days and join me? Give me around ten minutes every day, and I'll teach you the essentials of HTML and CSS.\r\n\r\nAnd don't worry... we start at the beginning!\r\n\r\nThis is part of the free Envato Tuts+ course 30 Days to Learn HTML & CSS: https://webdesign.tutsplus.com/course...\r\n\r\nNote: this course was published in 2012. Many of the tools and practices have changed and improved since recording, but the core principles are still relevant.\r\n\r\nFor more great web design courses and tutorials go to: https://webdesign.tutsplus.com/?utm_c...",
+    "image": "courses/2024/05/08/evanto.webp",
+    "price": "0.00",
+    "created": "2024-05-08T09:56:16.757Z",
+    "available": true,
+    "updated": "2024-05-08T10:17:34.943Z",
+    "students": []
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 1,
+  "fields": {
+    "course": 1,
+    "title": "Day 1",
+    "slug": "day-1",
+    "description": "",
+    "order": 0
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 2,
+  "fields": {
+    "course": 1,
+    "title": "Day 2",
+    "slug": "day-2",
+    "description": "",
+    "order": 1
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 3,
+  "fields": {
+    "course": 1,
+    "title": "Day 3",
+    "slug": "day-3",
+    "description": "",
+    "order": 2
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 4,
+  "fields": {
+    "course": 1,
+    "title": "Day 4",
+    "slug": "day-4",
+    "description": "",
+    "order": 3
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 1,
+  "fields": {
+    "uuid": "0898dc4c-6e34-4254-81e8-1083c6d3cf70",
+    "module": 1,
+    "content_type": 11,
+    "object_id": 1,
+    "order": 0
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 2,
+  "fields": {
+    "uuid": "0c133e8e-d452-4be2-a4d0-3dbe684671d9",
+    "module": 2,
+    "content_type": 11,
+    "object_id": 2,
+    "order": 1
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 3,
+  "fields": {
+    "uuid": "34f8d642-edd4-468c-8733-1dad3de8d260",
+    "module": 3,
+    "content_type": 11,
+    "object_id": 3,
+    "order": 2
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 4,
+  "fields": {
+    "uuid": "4ab9e1bb-71bc-480f-b827-69613f68ff1b",
+    "module": 3,
+    "content_type": 11,
+    "object_id": 4,
+    "order": 3
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 1,
+  "fields": {
+    "owner": 2,
+    "title": "Your First Webpage",
+    "created": "2024-05-08T11:39:23.097Z",
+    "updated": "2024-05-08T11:39:23.097Z",
+    "content": "Your First Webpage"
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 2,
+  "fields": {
+    "owner": 2,
+    "title": "Finding a Proper Code Editor",
+    "created": "2024-05-08T11:44:35.799Z",
+    "updated": "2024-05-08T11:44:35.799Z",
+    "content": "Finding a Proper Code Editor"
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 3,
+  "fields": {
+    "owner": 2,
+    "title": "Lists",
+    "created": "2024-05-08T11:44:52.782Z",
+    "updated": "2024-05-08T11:44:52.782Z",
+    "content": "Lists"
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 4,
+  "fields": {
+    "owner": 2,
+    "title": "Parent-Child",
+    "created": "2024-05-08T11:45:12.096Z",
+    "updated": "2024-05-08T11:45:12.096Z",
+    "content": "Parent-Child"
+  }
+}
+]

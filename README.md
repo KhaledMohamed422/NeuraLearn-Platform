@@ -27,12 +27,16 @@
 ## Installation With Docker
 1. Clone the repository
 2. Run the following command to start the Docker containers `docker-compose up`
-3. Apply the migrations to the database `docker compose exec web python /code/manage.py migrate`
-4. Create superuser (optional) `docker compose exec web python /code/manage.py createsuperuser`
-5. Load some initial data `docker compose exec web python /code/manage.py loaddata courses.json`
-6. Run celery worker`docker compose exec web celery -A NeuraLearn worker -l info`
-7. Run flower to monitor celery tasks`docker compose exec web celery -A NeuraLearn flower`
-8. Access the app at [http://localhost:8000](http://localhost:8000)
+3. Apply the migrations to users `docker compose exec web python /code/manage.py migrate users`
+4. Apply the migrations to users `docker compose exec web python /code/manage.py migrate courses`
+5. Apply the migrations to users `docker compose exec web python /code/manage.py migrate`
+6. Create superuser (optional) `docker compose exec web python /code/manage.py createsuperuser`
+7. Load some initial data courses `docker compose exec web python /code/manage.py loaddata courses.json`
+8. Load some initial data users `docker compose exec web python /code/manage.py loaddata users.json`
+9. Load some initial data auth `docker compose exec web python /code/manage.py loaddata auth.json`
+10. Run celery worker`docker compose exec web celery -A NeuraLearn worker -l info`
+11. Run flower to monitor celery tasks`docker compose exec web celery -A NeuraLearn flower`
+12. Access the app at [http://localhost:8000](http://localhost:8000)
 
 ## End Points 
 End Points  is accessible in /users/urls.py

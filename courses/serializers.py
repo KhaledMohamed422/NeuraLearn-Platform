@@ -293,25 +293,25 @@ class ModuleContentSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request is None:
             return None
-        return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "text"}, request=request)
+        return reverse("courses:module_content_text_create", kwargs={"slug": obj.slug}, request=request)
 
     @extend_schema_field(str)   
     def get_add_file_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
-        return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "file"}, request=request)
+        return reverse("courses:module_content_file_create", kwargs={"slug": obj.slug}, request=request)
     @extend_schema_field(str)   
     def get_add_image_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
-        return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "image"}, request=request)
+        return reverse("courses:module_content_image_create", kwargs={"slug": obj.slug}, request=request)
 
     @extend_schema_field(str)   
     def get_add_video_url(self, obj):
         request = self.context.get('request')
         if request is None:
             return None
-        return reverse("courses:module_content_create", kwargs={"slug": obj.slug, "model_name": "video"}, request=request)
+        return reverse("courses:module_content_video_create", kwargs={"slug": obj.slug}, request=request)
     

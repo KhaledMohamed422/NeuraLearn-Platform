@@ -3,7 +3,7 @@ from .models import Subject, Course, Module, Content, Text, File, Image, Video
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug']
+    list_display = ['id', 'title', 'slug']
     prepopulated_fields = {'slug': ('title',)}
 
 class ModuleInline(admin.StackedInline):
@@ -11,7 +11,7 @@ class ModuleInline(admin.StackedInline):
     
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'subject', 'created', 'available']
+    list_display = ['id','title', 'subject', 'created', 'available']
     list_filter = ['created', 'subject']
     list_editable = ['available']
     search_fields = ['title', 'overview']

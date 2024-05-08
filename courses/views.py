@@ -160,6 +160,61 @@ class ModuleContentListAPIView(generics.RetrieveAPIView):
 #------------------
 # Content API Views
 #------------------
+@extend_schema(tags=['Contents'])
+class ContentTextCreateAPIView(generics.CreateAPIView):
+    queryset = Module.objects.all()
+    serializer_class = TextSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def perform_create(self, serializer):
+        slug = self.kwargs.get('slug')
+        module = get_object_or_404(Module,
+                                       slug=slug,
+                                       course__owner=self.request.user)
+        content = serializer.save(owner=self.request.user)
+        Content.objects.create(module=module, item=content)
+
+@extend_schema(tags=['Contents'])
+class ContentFileCreateAPIView(generics.CreateAPIView):
+    queryset = Module.objects.all()
+    serializer_class = FileSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def perform_create(self, serializer):
+        slug = self.kwargs.get('slug')
+        module = get_object_or_404(Module,
+                                       slug=slug,
+                                       course__owner=self.request.user)
+        content = serializer.save(owner=self.request.user)
+        Content.objects.create(module=module, item=content)
+
+@extend_schema(tags=['Contents'])
+class ContentImageCreateAPIView(generics.CreateAPIView):
+    queryset = Module.objects.all()
+    serializer_class = ImageSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def perform_create(self, serializer):
+        slug = self.kwargs.get('slug')
+        module = get_object_or_404(Module,
+                                       slug=slug,
+                                       course__owner=self.request.user)
+        content = serializer.save(owner=self.request.user)
+        Content.objects.create(module=module, item=content)
+
+@extend_schema(tags=['Contents'])
+class ContentVideoCreateAPIView(generics.CreateAPIView):
+    queryset = Module.objects.all()
+    serializer_class = VideoSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def perform_create(self, serializer):
+        slug = self.kwargs.get('slug')
+        module = get_object_or_404(Module,
+                                       slug=slug,
+                                       course__owner=self.request.user)
+        content = serializer.save(owner=self.request.user)
+        Content.objects.create(module=module, item=content)
 
 @extend_schema(tags=['Contents'])
 class ContentCreateAPIView(generics.CreateAPIView):
