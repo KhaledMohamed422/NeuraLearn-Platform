@@ -1,11 +1,13 @@
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from courses.models import Subject, Course
-from .serializers import CourseSerializer, CourseModuleSerializer
+from drf_spectacular.utils import extend_schema
+from .serializers import PublicCourseSerializer,  PublicCourseModuleSerializer
 
+@extend_schema(tags=['Public Courses'])
 class CourseListAPIView(generics.ListAPIView):
     queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+    serializer_class = PublicCourseSerializer
     authentication_classes = []
     permission_classes = []
 
@@ -17,10 +19,10 @@ class CourseListAPIView(generics.ListAPIView):
             qs = qs.filter(subject=subject)
         return qs.filter(available=True)
 
-
+@extend_schema(tags=['Public Courses'])
 class CourseDetailAPIView(generics.RetrieveAPIView):
     queryset = Course.objects.all()
-    serializer_class = CourseModuleSerializer
+    serializer_class = PublicCourseModuleSerializer
     authentication_classes = []
     permission_classes = []
     lookup_field = 'slug'

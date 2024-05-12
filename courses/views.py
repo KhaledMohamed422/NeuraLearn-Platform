@@ -26,7 +26,7 @@ from .serializers import (
     SubjectSerializer,
 )
 
-
+@extend_schema(tags=['Subjects'])
 class SubjectListView(generics.ListAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer

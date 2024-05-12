@@ -15,6 +15,8 @@ paths:
       tags:
       - Courses
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '204':
@@ -31,6 +33,8 @@ paths:
       tags:
       - Courses
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -63,6 +67,8 @@ paths:
               $ref: '#/components/schemas/Course'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -93,6 +99,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCourse'
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -125,6 +133,8 @@ paths:
               $ref: '#/components/schemas/Module'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '201':
@@ -145,6 +155,8 @@ paths:
       tags:
       - Modules
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -153,38 +165,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/CourseModule'
           description: ''
-  /api/courses/{slug}/publish/:
-    put:
-      operationId: api_courses_publish_update
-      parameters:
-      - in: path
-        name: slug
-        schema:
-          type: string
-        required: true
-      tags:
-      - Courses
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          description: No response body
-  /api/courses/{slug}/unpublish/:
-    put:
-      operationId: api_courses_unpublish_update
-      parameters:
-      - in: path
-        name: slug
-        schema:
-          type: string
-        required: true
-      tags:
-      - Courses
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          description: No response body
   /api/courses/create/:
     post:
       operationId: api_courses_create_create
@@ -203,6 +183,8 @@ paths:
               $ref: '#/components/schemas/Course'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '201':
@@ -214,39 +196,25 @@ paths:
   /api/courses/mine/:
     get:
       operationId: api_courses_mine_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - Courses
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedManageCourseList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManageCourse'
           description: ''
-  /api/courses/module/{slug}/content/{model_name}/create/:
+  /api/courses/module/{slug}/content/file/create/:
     post:
-      operationId: api_courses_module_content_create_create
+      operationId: api_courses_module_content_file_create_create
       parameters:
-      - in: path
-        name: model_name
-        schema:
-          type: string
-        required: true
       - in: path
         name: slug
         schema:
@@ -254,11 +222,131 @@ paths:
         required: true
       tags:
       - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/File'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/File'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/File'
+        required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '201':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: ''
+  /api/courses/module/{slug}/content/image/create/:
+    post:
+      operationId: api_courses_module_content_image_create_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Image'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Image'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+          description: ''
+  /api/courses/module/{slug}/content/text/create/:
+    post:
+      operationId: api_courses_module_content_text_create_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Text'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Text'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Text'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Text'
+          description: ''
+  /api/courses/module/{slug}/content/video/create/:
+    post:
+      operationId: api_courses_module_content_video_create_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - Contents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Video'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Video'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video'
+          description: ''
   /api/courses/module/{slug}/contents/:
     get:
       operationId: api_courses_module_contents_retrieve
@@ -271,6 +359,8 @@ paths:
       tags:
       - Contents
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -291,6 +381,8 @@ paths:
       tags:
       - Modules
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '204':
@@ -319,6 +411,8 @@ paths:
               $ref: '#/components/schemas/Module'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -349,6 +443,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedModule'
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -357,91 +453,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/Module'
           description: ''
-  /api/courses/module/content/{model_name}/{uuid}/:
+  /api/courses/subjects/:
     get:
-      operationId: api_courses_module_content_retrieve
-      parameters:
-      - in: path
-        name: model_name
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: uuid
-        schema:
-          type: string
-          format: uuid
-        required: true
+      operationId: api_courses_subjects_list
       tags:
-      - Contents
+      - Subjects
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
-    put:
-      operationId: api_courses_module_content_update
-      parameters:
-      - in: path
-        name: model_name
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: uuid
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - Contents
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          description: No response body
-    patch:
-      operationId: api_courses_module_content_partial_update
-      parameters:
-      - in: path
-        name: model_name
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: uuid
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - Contents
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: api_courses_module_content_destroy
-      parameters:
-      - in: path
-        name: model_name
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: uuid
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - Contents
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+          description: ''
   /api/public/course/{slug}/detail/:
     get:
       operationId: api_public_course_detail_retrieve
@@ -452,68 +481,47 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Public Courses
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CourseModule'
+                $ref: '#/components/schemas/PublicCourseModule'
           description: ''
   /api/public/courses/:
     get:
       operationId: api_public_courses_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
-      - api
+      - Public Courses
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedCourseList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicCourse'
           description: ''
   /api/public/subject/{subject}/:
     get:
       operationId: api_public_subject_list
       parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       - in: path
         name: subject
         schema:
           type: string
         required: true
       tags:
-      - api
+      - Public Courses
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedCourseList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicCourse'
           description: ''
   /api/schema/:
     get:
@@ -638,6 +646,8 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -675,15 +685,17 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Students
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CourseModule'
+                $ref: '#/components/schemas/StudentCourseModule'
           description: ''
   /api/students/courses/{slug}/enroll/:
     post:
@@ -695,8 +707,10 @@ paths:
           type: string
         required: true
       tags:
-      - api
+      - Students
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -785,29 +799,20 @@ paths:
   /auth/users/:
     get:
       operationId: auth_users_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - auth
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
           description: ''
     post:
       operationId: auth_users_create
@@ -826,6 +831,8 @@ paths:
               $ref: '#/components/schemas/UserCreatePasswordRetype'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -848,6 +855,8 @@ paths:
       tags:
       - auth
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -880,6 +889,8 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -911,6 +922,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUser'
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -931,6 +944,8 @@ paths:
       tags:
       - auth
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '204':
@@ -953,6 +968,8 @@ paths:
               $ref: '#/components/schemas/Activation'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -968,6 +985,8 @@ paths:
       tags:
       - auth
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -993,6 +1012,8 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -1017,6 +1038,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUser'
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -1030,6 +1053,8 @@ paths:
       tags:
       - auth
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '204':
@@ -1052,6 +1077,8 @@ paths:
               $ref: '#/components/schemas/SendEmailReset'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -1079,6 +1106,8 @@ paths:
               $ref: '#/components/schemas/SendEmailReset'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -1106,6 +1135,8 @@ paths:
               $ref: '#/components/schemas/UsernameResetConfirm'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -1133,6 +1164,8 @@ paths:
               $ref: '#/components/schemas/SendEmailReset'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -1160,6 +1193,8 @@ paths:
               $ref: '#/components/schemas/PasswordResetConfirm'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       - {}
       responses:
@@ -1187,6 +1222,8 @@ paths:
               $ref: '#/components/schemas/SetUsernameRetype'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -1213,6 +1250,8 @@ paths:
               $ref: '#/components/schemas/SetPasswordRetype'
         required: true
       security:
+      - basicAuth: []
+      - cookieAuth: []
       - jwtAuth: []
       responses:
         '200':
@@ -1328,11 +1367,37 @@ components:
       - create_new_module_url
       - modules
       - title
+    File:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        file:
+          type: string
+          format: uri
+          pattern: (?:pdf)$
+      required:
+      - file
+      - title
+    Image:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        file:
+          type: string
+          format: uri
+      required:
+      - file
+      - title
     ManageContent:
       type: object
       properties:
         item:
-          type: string
+          type: object
+          additionalProperties: {}
           readOnly: true
       required:
       - item
@@ -1462,66 +1527,6 @@ components:
       - add_video_url
       - contents
       - title
-    PaginatedCourseList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Course'
-    PaginatedManageCourseList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManageCourse'
-    PaginatedUserList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
     PasswordResetConfirm:
       type: object
       properties:
@@ -1584,6 +1589,103 @@ components:
           type: string
           format: email
           readOnly: true
+    PublicCourse:
+      type: object
+      properties:
+        subject:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        image:
+          type: string
+          format: uri
+        instructor:
+          type: string
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+        overview:
+          type: string
+          maxLength: 5000
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        detail_url:
+          type: string
+          readOnly: true
+      required:
+      - detail_url
+      - instructor
+      - overview
+      - price
+      - slug
+      - subject
+      - title
+    PublicCourseModule:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        overview:
+          type: string
+          maxLength: 5000
+        image:
+          type: string
+          format: uri
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        instructor:
+          type: string
+          readOnly: true
+        enrollments:
+          type: string
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicModule'
+          readOnly: true
+      required:
+      - enrollments
+      - instructor
+      - modules
+      - overview
+      - price
+      - title
+      - updated
+    PublicModule:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 5000
+        slug:
+          type: string
+          readOnly: true
+        contents:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+      required:
+      - contents
+      - slug
+      - title
     SendEmailReset:
       type: object
       properties:
@@ -1621,6 +1723,71 @@ components:
       - current_password
       - new_email
       - re_new_email
+    StudentCourseModule:
+      type: object
+      properties:
+        title:
+          type: string
+          readOnly: true
+        module:
+          allOf:
+          - $ref: '#/components/schemas/StudentModule'
+          readOnly: true
+      required:
+      - module
+      - title
+    StudentModule:
+      type: object
+      properties:
+        order:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 5000
+        contents:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+      required:
+      - contents
+      - title
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        slug:
+          type: string
+          maxLength: 200
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - id
+      - slug
+      - title
+    Text:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        content:
+          type: string
+          maxLength: 5000
+      required:
+      - content
+      - title
     TokenObtainPair:
       type: object
       properties:
@@ -1720,7 +1887,27 @@ components:
           maxLength: 255
       required:
       - new_email
+    Video:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        file:
+          type: string
+          format: uri
+          pattern: (?:mp4)$
+      required:
+      - file
+      - title
   securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
     jwtAuth:
       type: apiKey
       in: header

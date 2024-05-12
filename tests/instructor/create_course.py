@@ -188,13 +188,23 @@ if __name__ == "__main__":
     client = JWTClient() 
     strin = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(100))
     data = {
-        "subject": "1",
-        "title": "Amazing Course",
-        "overview": "Nice Overview", 
-        "price": "100", 
+        "subject": "3",
+        "title": "Django Rest-framework ",
+        "overview": """
+Even if your goal is not to become a web designer, learning HTML and CSS can be an amazing tool to have in your skill-set -- both in the workplace, and at home. If this has been on your to-do list for some time, why don't you take thirty days and join me? Give me around ten minutes every day, and I'll teach you the essentials of HTML and CSS.
+
+And don't worry... we start at the beginning!
+
+This is part of the free Envato Tuts+ course 30 Days to Learn HTML & CSS: https://webdesign.tutsplus.com/course...
+
+Note: this course was published in 2012. Many of the tools and practices have changed and improved since recording, but the core principles are still relevant.
+
+For more great web design courses and tutorials go to: https://webdesign.tutsplus.com/?utm_c...
+""", 
+        "price": "0", 
     }
     # image_path = "/home/mahmoud/django/NeuraLearn/NeuraLearn-Platform/media/images/Context-Context_Diagram.jpg"
-    image_path = "/home/mahmoud/images/Context-Page-4.jpg"
+    image_path = "/home/mahmoud/images/evanto.webp"
     files = None
     with open(image_path, 'rb') as file:
         files = {'image': file}

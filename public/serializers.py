@@ -1,8 +1,10 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from drf_spectacular.utils import extend_schema_field
 from courses.models import Course, Module, Text, Image, File, Video
+from typing import List
 
-class CourseSerializer(serializers.ModelSerializer):
+class PublicCourseSerializer(serializers.ModelSerializer):
     subject = serializers.SerializerMethodField()
     instructor = serializers.SerializerMethodField()
     detail_url = serializers.SerializerMethodField()
@@ -20,13 +22,14 @@ class CourseSerializer(serializers.ModelSerializer):
             'price',
             'detail_url',
         ]
-    
-    def get_subject(self, obj):
+
+    def get_subject(self, obj) -> str:
         return obj.subject.title
     
-    def get_instructor(self, obj):
+    def get_instructor(self, obj) -> str:
         return obj.owner.get_full_name()
 
+    @extend_schema_field(str)
     def get_detail_url(self, obj):
         request = self.context.get('request')
         if request is None:
@@ -75,7 +78,7 @@ class ItemBaseSerializer(serializers.Serializer):
             }
 
 
-class ModuleSerializer(serializers.ModelSerializer):
+class PublicModuleSerializer(serializers.ModelSerializer):
     contents = serializers.SerializerMethodField()
     slug = serializers.ReadOnlyField()
 
@@ -88,7 +91,7 @@ class ModuleSerializer(serializers.ModelSerializer):
             'contents',
         ]
 
-    def get_contents(self, obj):
+    def get_contents(self, obj) -> List[dict]:
         data = []
         request = self.context.get('request')
         for content in obj.contents.all():
@@ -96,10 +99,10 @@ class ModuleSerializer(serializers.ModelSerializer):
             data.append(ItemBaseSerializer(item, context={'request': request}).data)
         return data
 
-class CourseModuleSerializer(serializers.ModelSerializer):
+class PublicCourseModuleSerializer(serializers.ModelSerializer):
     instructor = serializers.SerializerMethodField()
     enrollments = serializers.SerializerMethodField()
-    modules = ModuleSerializer(many=True, read_only=True)
+    modules = PublicModuleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course
@@ -113,9 +116,11 @@ class CourseModuleSerializer(serializers.ModelSerializer):
             'updated',
             'modules',
         ]
-    
+
+    @extend_schema_field(str)
     def get_instructor(self, obj):
         return obj.owner.get_full_name()
     
+    @extend_schema_field(str)
     def get_enrollments(self, obj):
         return obj.students.count()

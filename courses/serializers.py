@@ -232,7 +232,7 @@ class ManageContentSerializer(serializers.ModelSerializer):
         model_name = instance.item.__class__.__name__.lower()
         return { model_name: item_data }
     
-    def get_item(self, obj):
+    def get_item(self, obj) -> dict:
         item = obj.item
         model_name = item.__class__.__name__.lower()
         serializer_class = None
@@ -301,6 +301,7 @@ class ModuleContentSerializer(serializers.ModelSerializer):
         if request is None:
             return None
         return reverse("courses:module_content_file_create", kwargs={"slug": obj.slug}, request=request)
+    
     @extend_schema_field(str)   
     def get_add_image_url(self, obj):
         request = self.context.get('request')

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from courses.models import Course, Module, Text, File, Image, Video
+from typing import List
 
 class TextSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,7 +43,7 @@ class ItemBaseSerializer(serializers.Serializer):
                 "video":VideoSerializer(instance, context={"request": request}).data
             }
 
-class ModuleSerializer(serializers.ModelSerializer):
+class StudentModuleSerializer(serializers.ModelSerializer):
     contents = serializers.SerializerMethodField()
 
     class Meta:
@@ -54,7 +55,7 @@ class ModuleSerializer(serializers.ModelSerializer):
             'contents',
         ]
     
-    def get_contents(self, obj):
+    def get_contents(self, obj) -> List[dict]:
         data = []
         request = self.context.get('request')
         for content in obj.contents.all():
@@ -62,9 +63,9 @@ class ModuleSerializer(serializers.ModelSerializer):
             data.append(ItemBaseSerializer(item, context={'request': request}).data)
         return data
 
-class CourseModuleSerializer(serializers.ModelSerializer):
+class StudentCourseModuleSerializer(serializers.ModelSerializer):
     title = serializers.CharField(read_only=True)
-    module = ModuleSerializer(many=False, read_only=True)
+    module = StudentModuleSerializer(many=False, read_only=True)
 
     class Meta:
         model = Course
