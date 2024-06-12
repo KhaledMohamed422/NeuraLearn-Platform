@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'public.apps.PublicConfig',
     'students.apps.StudentsConfig',
+    'neuramodels.apps.NeuramodelsConfig',
 
     # third-parties 
     'drf_spectacular',
