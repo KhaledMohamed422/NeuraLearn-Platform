@@ -260,14 +260,14 @@ class ManageContentSerializer(serializers.ModelSerializer):
         model_name = obj.item.__class__.__name__.lower()
         if request is None:
             return None
-        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": f"{model_name}"}, request=request)
+        return reverse(f"courses:content_{model_name}_update_delete", kwargs={"id": obj.item.id}, request=request)
 
     def get_delete_url(self, obj):
         request = self.context.get('request')
         model_name = obj.item.__class__.__name__.lower()
         if request is None:
             return None
-        return reverse("courses:content_update", kwargs={"uuid": obj.uuid, "model_name": f"{model_name}"}, request=request)
+        return reverse(f"courses:content_{model_name}_update_delete", kwargs={"id": obj.item.id}, request=request)
  
 
 class ModuleContentSerializer(serializers.ModelSerializer):

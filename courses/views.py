@@ -6,7 +6,7 @@ from django.http import Http404
 from drf_spectacular.utils import extend_schema
 from django.apps import apps
 from .mixins import CourseOwnerMixin
-from .models import Course, Module, Content, Subject
+from .models import Course, Module, Content, Subject, Text, File, Image, Video
 from .permissions import ( 
     IsModuleOwnerPermission,
     IsInstructorPermission,
@@ -175,6 +175,17 @@ class ContentTextCreateAPIView(generics.CreateAPIView):
         Content.objects.create(module=module, item=content)
 
 @extend_schema(tags=['Contents'])
+class ContentTextUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Text.objects.all()
+    serializer_class = TextSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def get_object(self):
+        id = self.kwargs.get('id')
+        return generics.get_object_or_404(Text, id=id, owner=self.request.user)
+
+
+@extend_schema(tags=['Contents'])
 class ContentFileCreateAPIView(generics.CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = FileSerializer
@@ -188,6 +199,16 @@ class ContentFileCreateAPIView(generics.CreateAPIView):
         content = serializer.save(owner=self.request.user)
         Content.objects.create(module=module, item=content)
 
+@extend_schema(tags=['Contents'])
+class ContentFileUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = File.objects.all()
+    serializer_class = FileSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def get_object(self):
+        id = self.kwargs.get('id')
+        return generics.get_object_or_404(File, id=id, owner=self.request.user)
+    
 @extend_schema(tags=['Contents'])
 class ContentImageCreateAPIView(generics.CreateAPIView):
     queryset = Module.objects.all()
@@ -203,6 +224,16 @@ class ContentImageCreateAPIView(generics.CreateAPIView):
         Content.objects.create(module=module, item=content)
 
 @extend_schema(tags=['Contents'])
+class ContentImageUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+    permission_classes = [IsInstructorPermission]
+
+    def get_object(self):
+        id = self.kwargs.get('id')
+        return generics.get_object_or_404(Image, id=id, owner=self.request.user)
+    
+@extend_schema(tags=['Contents'])
 class ContentVideoCreateAPIView(generics.CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = VideoSerializer
@@ -217,89 +248,11 @@ class ContentVideoCreateAPIView(generics.CreateAPIView):
         Content.objects.create(module=module, item=content)
 
 @extend_schema(tags=['Contents'])
-class ContentCreateAPIView(generics.CreateAPIView):
-    module = None 
-    model = None
-    queryset = None
+class ContentVideoUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
     permission_classes = [IsInstructorPermission]
 
-    def get_model(self, model_name):
-        if model_name in ['text', 'video', 'image', 'file']:
-            return apps.get_model(app_label='courses',
-                                  model_name=model_name)
-        return None
-
-    def get_serializer_class(self):
-        model = self.model.__name__
-        if model == 'Text':
-            return TextSerializer
-        elif model == 'Video':
-            return VideoSerializer
-        elif model == 'Image':
-            return ImageSerializer
-        elif model == 'File':
-            return FileSerializer
-        return None
-
-    def dispatch(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        model_name = kwargs.get('model_name')
-        self.module = get_object_or_404(Module,
-                                       slug=slug,
-                                       course__owner=self.request.user)
-        self.model = self.get_model(model_name)
-        if self.model is None:
-            raise Http404("Model not found")
-        return super().dispatch(request, *args, **kwargs)
-    
-    def perform_create(self, serializer):
-        module = self.module
-        content = serializer.save(owner=self.request.user)
-        Content.objects.create(module=module, item=content)
-
-    def get_queryset(self):
-        qs = self.model.objects.all()
-        return qs
-
-@extend_schema(tags=['Contents'])
-class ContentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    model = None
-    obj = None 
-    permission_classes = [IsInstructorPermission]
-
-    def get_model(self, model_name):
-        if model_name in ['text', 'video', 'image', 'file']:
-            return apps.get_model(app_label='courses',
-                                  model_name=model_name)
-        return None
-
-    def get_serializer_class(self):
-        model = self.model.__name__
-        if model == 'Text':
-            return TextSerializer
-        elif model == 'Video':
-            return VideoSerializer
-        elif model == 'Image':
-            return ImageSerializer
-        elif model == 'File':
-            return FileSerializer
-        return None
-
-    def dispatch(self, request, *args, **kwargs):
-        model_name = kwargs.get('model_name')
-        uuid = kwargs.get('uuid')
-        self.model = self.get_model(model_name)
-        self.obj = get_object_or_404(Content,
-                                         uuid=uuid,
-                                         module__course__owner=request.user)
-        return super().dispatch(request, *args, **kwargs)
-    
-    def get_queryset(self):
-        return None
-    
     def get_object(self):
-        return self.obj.item
-
-    def perform_destroy(self, instance):
-        self.obj.item.delete()
-        self.obj.delete()
+        id = self.kwargs.get('id')
+        return generics.get_object_or_404(Video, id=id, owner=self.request.user)

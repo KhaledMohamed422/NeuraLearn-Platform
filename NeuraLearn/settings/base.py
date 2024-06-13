@@ -81,8 +81,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'NeuraLearn.urls'
 # CORS_URLS_REGEX = r"^/api/.*"
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'https://localhost:3000',
+    'http://localhost:5173',
+    'https://localhost:5173',
 ]
 
 TEMPLATES = [
@@ -154,7 +154,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -167,8 +167,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
-    #'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    #'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
     'AUTH_TOKEN_CLASSES': (
         'rest_framework_simplejwt.tokens.AccessToken',
     )
