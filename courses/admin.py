@@ -23,4 +23,8 @@ admin.site.register(Content)
 admin.site.register(Text)
 admin.site.register(File)
 admin.site.register(Image)
-admin.site.register(Video)
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'transcript']
+    list_editable = ['transcript']
