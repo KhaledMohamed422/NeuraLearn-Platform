@@ -5,6 +5,7 @@ from rest_framework.generics import get_object_or_404
 from django.http import Http404
 from drf_spectacular.utils import extend_schema
 from django.apps import apps
+from .tasks import transcript_video
 from .mixins import CourseOwnerMixin
 from .models import Course, Module, Content, Subject, Text, File, Image, Video
 from .permissions import ( 
@@ -245,6 +246,7 @@ class ContentVideoCreateAPIView(generics.CreateAPIView):
                                        slug=slug,
                                        course__owner=self.request.user)
         content = serializer.save(owner=self.request.user)
+        transcript_video.delay(content.id)
         Content.objects.create(module=module, item=content)
 
 @extend_schema(tags=['Contents'])

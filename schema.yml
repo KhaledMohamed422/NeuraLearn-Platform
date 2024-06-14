@@ -887,6 +887,67 @@ paths:
                 items:
                   $ref: '#/components/schemas/Subject'
           description: ''
+  /api/models/module/{slug}/transcripts/:
+    get:
+      operationId: api_models_module_transcripts_retrieve
+      description: Retrieve the transcript for all videos in a module.
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - Summarizer
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoTranscript'
+          description: List of video transcripts
+        '400':
+          description: Transcript not generated yet
+        '404':
+          description: Module not found
+  /api/models/summarize/:
+    post:
+      operationId: api_models_summarize_create
+      tags:
+      - Summarizer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transcripts'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transcripts'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Transcripts'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summarizer'
+          description: ''
+        '400':
+          description: Transcript not generated yet
+        '404':
+          description: Module not found
   /api/public/course/{slug}/detail/:
     get:
       operationId: api_public_course_detail_retrieve
@@ -2230,6 +2291,13 @@ components:
       - id
       - slug
       - title
+    Summarizer:
+      type: object
+      properties:
+        summary:
+          type: string
+      required:
+      - summary
     Text:
       type: object
       properties:
@@ -2282,6 +2350,13 @@ components:
           writeOnly: true
       required:
       - token
+    Transcripts:
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+      - text
     User:
       type: object
       properties:
@@ -2353,6 +2428,17 @@ components:
           pattern: (?:mp4)$
       required:
       - file
+      - title
+    VideoTranscript:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        transcript:
+          type: string
+          nullable: true
+      required:
       - title
   securitySchemes:
     basicAuth:

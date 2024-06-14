@@ -5,12 +5,16 @@ from celery import shared_task
 from django.core.mail import send_mail
 from .models import Course, Content, Video
 from django.conf import settings
+from time import sleep
+import logging
 
 URL = settings.TRANSCRIPT_MODEL_URL
 TOKEN = settings.TRANSCRIPT_TOKEN
 MEDIA_ROOT = settings.MEDIA_ROOT
 
 headers = {"Authorization": f"Bearer {TOKEN}"}
+
+logger = logging.getLogger(__name__)
 
 def convert_video_to_audio(video_path, audio_path):
     """
@@ -66,3 +70,29 @@ def transcript(id):
         print("Course not found")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+@shared_task
+def transcript_video(id):
+    try:
+        obj = Video.objects.get(id=id)
+
+        if obj.transcript:
+            return
+        
+        video_path = f"{MEDIA_ROOT}/{obj.file}"
+        extracted_audio_path =  f"{MEDIA_ROOT}/audios/{obj.id}.mp3"
+        convert_video_to_audio(video_path, extracted_audio_path)
+        with open(extracted_audio_path, "rb") as f:
+            data = f.read()
+        for i in range(5):
+            r = requests.post(URL, headers=headers, data=data)
+            response = r.json()
+            if 'error' not in response:
+                obj.transcript = response['text']
+                obj.save()
+                break
+            else:
+                logger.error(f"Transcription error: {response['error']}")
+            sleep(20)
+    except Exception as e:
+        logger.exception(f"Failed to transcribe video {id}: {e}")
