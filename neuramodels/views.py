@@ -57,6 +57,7 @@ def module_get_transcripts(request, slug=None):
 
 
 @extend_schema(
+    tags=['Question Generation'],
     responses={200: VideoTranscriptSerializer(many=True)},
     parameters=[
         {
