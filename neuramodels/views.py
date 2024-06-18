@@ -56,23 +56,35 @@ def module_get_transcripts(request, slug=None):
     return Response(data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def video_get_transcripts(request, id=None):
-    video = get_object_or_404(Video, id=id, owner=request.user)
-    data = []
+@extend_schema(
+    responses={200: VideoTranscriptSerializer(many=True)},
+    parameters=[
+        {
+            'name': 'id',
+            'required': True,
+            'location': 'path',
+            'description': 'ID of the video to retrieve transcript for',
+            'schema': {'type': 'integer'}
+        }
+    ]
+)
+class VideoGetTranscripts(APIView):
+    permission_classes = [IsAuthenticated]
 
-    # Check if video already transcripted 
-    if video.transcript:
-        data.append(VideoTranscriptSerializer(video).data)
-    else:
-        return Response(
-            {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    
-    return Response(data, status=status.HTTP_200_OK)
+    def get(self, request, id=None):
+        video = get_object_or_404(Video, id=id, owner=request.user)
+        data = {}
 
+        # Check if video already transcripted 
+        if video.transcript:
+            data = VideoTranscriptSerializer(video).data
+        else:
+            return Response(
+                {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(data, status=status.HTTP_200_OK)
 
 
 @extend_schema(
