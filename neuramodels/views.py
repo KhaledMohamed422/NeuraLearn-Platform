@@ -55,6 +55,25 @@ def module_get_transcripts(request, slug=None):
     
     return Response(data, status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def video_get_transcripts(request, id=None):
+    video = get_object_or_404(Video, id=id, course__owner=request.user)
+    data = []
+
+    # Check if video already transcripted 
+    if video.transcript:
+        data.append(VideoTranscriptSerializer(video).data)
+    else:
+        return Response(
+            {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    return Response(data, status=status.HTTP_200_OK)
+
+
 @extend_schema(
     tags=['Summarizer'],
     request=Transcripts,
@@ -88,3 +107,4 @@ class Summarizer(APIView):
                 sleep(20)
             return Response(response.json(), status=response.status_code)
         return Response(serializer.errors, status=400)
+    
