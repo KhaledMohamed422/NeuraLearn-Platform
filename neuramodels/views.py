@@ -36,7 +36,7 @@ TOKEN = settings.SUMMARIZER_TOKEN
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def module_get_transcripts(request, slug=None):
-    module = get_object_or_404(Module, slug=slug, course__owner=request.user)
+    module = get_object_or_404(Module, slug=slug, owner=request.user)
     data = []
 
     for content in module.contents.all():
