@@ -36,7 +36,7 @@ TOKEN = settings.SUMMARIZER_TOKEN
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def module_get_transcripts(request, slug=None):
-    module = get_object_or_404(Module, slug=slug, owner=request.user)
+    module = get_object_or_404(Module, slug=slug, course__owner=request.user)
     data = []
 
     for content in module.contents.all():
@@ -59,7 +59,7 @@ def module_get_transcripts(request, slug=None):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def video_get_transcripts(request, id=None):
-    video = get_object_or_404(Video, id=id, course__owner=request.user)
+    video = get_object_or_404(Video, id=id, owner=request.user)
     data = []
 
     # Check if video already transcripted 
@@ -72,6 +72,7 @@ def video_get_transcripts(request, id=None):
         )
     
     return Response(data, status=status.HTTP_200_OK)
+
 
 
 @extend_schema(
