@@ -10,7 +10,8 @@ from rest_framework.generics import get_object_or_404
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 from courses.models import Module, Video
 from time import sleep
-from .serializers import VideoTranscriptSerializer, SummarizerSerializer, Transcripts
+from .serializers import VideoTranscriptSerializer, SummarizerSerializer, Transcripts ,QuestionGenerationSerializer
+from .utils import generate_questions
 
 URL = settings.SUMMARIZER_MODEL_URL
 TOKEN = settings.SUMMARIZER_TOKEN
@@ -55,39 +56,6 @@ def module_get_transcripts(request, slug=None):
     
     return Response(data, status=status.HTTP_200_OK)
 
-
-@extend_schema(
-    tags=['Question Generation'],
-    responses={200: VideoTranscriptSerializer(many=True)},
-    parameters=[
-        {
-            'name': 'id',
-            'required': True,
-            'location': 'path',
-            'description': 'ID of the video to retrieve transcript for',
-            'schema': {'type': 'integer'}
-        }
-    ]
-)
-class VideoGetTranscripts(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, id=None):
-        video = get_object_or_404(Video, id=id, owner=request.user)
-        data = {}
-
-        # Check if video already transcripted 
-        if video.transcript:
-            data = VideoTranscriptSerializer(video).data
-        else:
-            return Response(
-                {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        return Response(data, status=status.HTTP_200_OK)
-
-
 @extend_schema(
     tags=['Summarizer'],
     request=Transcripts,
@@ -122,3 +90,51 @@ class Summarizer(APIView):
             return Response(response.json(), status=response.status_code)
         return Response(serializer.errors, status=400)
     
+
+@extend_schema(
+    tags=['Question Generation'],
+    responses={200: VideoTranscriptSerializer(many=True)},
+    parameters=[
+        {
+            'name': 'id',
+            'required': True,
+            'location': 'path',
+            'description': 'ID of the video to retrieve transcript for',
+            'schema': {'type': 'integer'}
+        }
+    ]
+)
+class VideoGetTranscript(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id=None):
+        video = get_object_or_404(Video, id=id, owner=request.user)
+        data = {}
+
+        # Check if video already transcripted 
+        if video.transcript:
+            data = VideoTranscriptSerializer(video).data
+        else:
+            return Response(
+                {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(data, status=status.HTTP_200_OK)
+
+@extend_schema(
+    tags=['Question Generation'],
+    request=QuestionGenerationSerializer,
+    responses={200: dict}
+)
+class QuestionGeneration(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = QuestionGenerationSerializer(data=request.data)
+        if serializer.is_valid():
+            transcript = serializer.validated_data['transcript']
+            questions = generate_questions(transcript)
+            return Response({"questions": questions}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
