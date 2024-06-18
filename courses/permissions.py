@@ -8,4 +8,5 @@ class IsModuleOwnerPermission(DjangoModelPermissions, BasePermission):
 class IsInstructorPermission(BasePermission):
     def has_permission(self, request, view):
         print(request.user)
+        print(request.user.groups.filter(name='Instructors').exists())
         return request.user.groups.filter(name='Instructors').exists()
