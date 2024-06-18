@@ -1,0 +1,37 @@
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction}{5}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Problem Definition}{5}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}The Role of Generative AI}{6}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Introducing NeuraLearnAcademy}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Problem Solution}{6}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Generating Questions and Summarizing Video Transcripts}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Integration with Platform}{7}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Motivation}{8}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Comprehensive Understanding}{8}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Personalized Knowledge Assessment}{8}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Summarization for Reinforcement}{8}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.5.4}Iterative Learning Journey}{8}{subsection.1.5.4}%
+\contentsline {subsection}{\numberline {1.5.5}Continuous Improvement Feedback Loop}{9}{subsection.1.5.5}%
+\contentsline {section}{\numberline {1.6}Project Limitations}{9}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Project Planning}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Why Planning ?}{10}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Scrum Overview}{10}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Scrum Activities and Events}{11}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Why Scrum?}{12}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Main tasks of our project}{12}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Risk Identification}{13}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Technology Dependencies}{14}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Data Security and Privacy}{14}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}User Adoption}{14}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}Scalability Challenges}{14}{subsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.6.5}Content Quality}{14}{subsection.2.6.5}%
+\contentsline {subsection}{\numberline {2.6.6}Technological Obsolescence}{14}{subsection.2.6.6}%
+\contentsline {subsection}{\numberline {2.6.7}Adaptability to Learning Styles}{15}{subsection.2.6.7}%
+\contentsline {subsection}{\numberline {2.6.8}Integration with External Systems}{15}{subsection.2.6.8}%
+\contentsline {subsection}{\numberline {2.6.9}Regulatory Compliance}{15}{subsection.2.6.9}%
+\contentsline {subsection}{\numberline {2.6.10}User Technical Proficiency}{15}{subsection.2.6.10}%
+\contentsline {chapter}{\numberline {3}System Analysis}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Requirements}{16}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Functional Requirements}{16}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Non-Functional Requirements}{17}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Process of Requirements }{17}{section.3.2}%

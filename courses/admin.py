@@ -26,5 +26,5 @@ admin.site.register(Image)
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'transcript']
+    list_display = ['id', 'title', 'transcript' , 'slug']
     list_editable = ['transcript']
