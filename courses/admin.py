@@ -18,7 +18,10 @@ class CourseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ModuleInline]
 
-admin.site.register(Module)
+@admin.register(Module)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['id','title', 'slug']
+
 admin.site.register(Content)
 admin.site.register(Text)
 admin.site.register(File)
