@@ -155,7 +155,6 @@ class ModuleContentListAPIView(generics.RetrieveAPIView):
 
     def get_object(self):
         slug = self.kwargs.get('slug')
-        print(slug)
         return get_object_or_404(Module, slug=slug, course__owner=self.request.user)
 
 
