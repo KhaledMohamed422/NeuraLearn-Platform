@@ -1,7 +1,32 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
+from drf_spectacular.utils import extend_schema_field
 from courses.models import Course, Module, Text, File, Image, Video
 from typing import List
 
+class StudentCourseSerializer(serializers.ModelSerializer):
+    subject = serializers.SerializerMethodField()
+    instructor = serializers.SerializerMethodField()
+    slug = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Course
+        fields = [
+            'subject', 
+            'title',
+            'image',
+            'instructor',
+            'slug', 
+            'overview',
+            'price',
+        ]
+
+    def get_subject(self, obj) -> str:
+        return obj.subject.title
+    
+    def get_instructor(self, obj) -> str:
+        return obj.owner.get_full_name()
+    
 class TextSerializer(serializers.ModelSerializer):
     class Meta:
         model = Text
@@ -43,18 +68,37 @@ class ItemBaseSerializer(serializers.Serializer):
                 "video":VideoSerializer(instance, context={"request": request}).data
             }
 
-class StudentModuleSerializer(serializers.ModelSerializer):
-    contents = serializers.SerializerMethodField()
+class StudentModulesSerializer(serializers.ModelSerializer):
+    contents_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Module
         fields = [
             'order',
             'title',
+            'slug',
             'description',
-            'contents',
+            'contents_url',
         ]
     
+    def get_contents_url(self, obj) -> str:
+        request = self.context.get('request')
+        if request is None:
+            return None
+        return reverse("students:student_module_content_list", kwargs={"slug": obj.slug}, request=request)
+
+class StudentModuleSerializer(serializers.ModelSerializer):
+    contents = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Module
+        fields = [
+            'title',
+            'description',
+            'slug',
+            'contents'
+        ]
+
     def get_contents(self, obj) -> List[dict]:
         data = []
         request = self.context.get('request')
@@ -63,13 +107,18 @@ class StudentModuleSerializer(serializers.ModelSerializer):
             data.append(ItemBaseSerializer(item, context={'request': request}).data)
         return data
 
-class StudentCourseModuleSerializer(serializers.ModelSerializer):
+class StudentCourseModulesSerializer(serializers.ModelSerializer):
     title = serializers.CharField(read_only=True)
-    module = StudentModuleSerializer(many=False, read_only=True)
+    modules = StudentModulesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course
         fields = [
             'title',
-            'module',
+            'modules',
         ]
+
+"""
+contents = serializers.SerializerMethodField()
+
+"""

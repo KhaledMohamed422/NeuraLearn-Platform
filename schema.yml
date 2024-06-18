@@ -1147,15 +1147,10 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
-  /api/students/course/{slug}/{module_slug}/:
+  /api/students/course/{slug}/modules/:
     get:
-      operationId: api_students_course_retrieve
+      operationId: api_students_course_modules_retrieve
       parameters:
-      - in: path
-        name: module_slug
-        schema:
-          type: string
-        required: true
       - in: path
         name: slug
         schema:
@@ -1172,7 +1167,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StudentCourseModule'
+                $ref: '#/components/schemas/StudentCourseModules'
           description: ''
   /api/students/courses/{slug}/enroll/:
     post:
@@ -1192,6 +1187,46 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/students/module/{slug}/contents/:
+    get:
+      operationId: api_students_module_contents_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - Students
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentModule'
+          description: ''
+  /api/students/mylearning/:
+    get:
+      operationId: api_students_mylearning_list
+      tags:
+      - Students
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentCourse'
+          description: ''
   /auth/jwt/create/:
     post:
       operationId: auth_jwt_create_create
@@ -2238,20 +2273,76 @@ components:
       - current_password
       - new_email
       - re_new_email
-    StudentCourseModule:
+    StudentCourse:
+      type: object
+      properties:
+        subject:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        image:
+          type: string
+          format: uri
+        instructor:
+          type: string
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+        overview:
+          type: string
+          maxLength: 5000
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - instructor
+      - overview
+      - price
+      - slug
+      - subject
+      - title
+    StudentCourseModules:
       type: object
       properties:
         title:
           type: string
           readOnly: true
-        module:
-          allOf:
-          - $ref: '#/components/schemas/StudentModule'
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentModules'
           readOnly: true
       required:
-      - module
+      - modules
       - title
     StudentModule:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+          maxLength: 5000
+        slug:
+          type: string
+          maxLength: 200
+          pattern: ^[-a-zA-Z0-9_]+$
+        contents:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+      required:
+      - contents
+      - slug
+      - title
+    StudentModules:
       type: object
       properties:
         order:
@@ -2262,17 +2353,19 @@ components:
         title:
           type: string
           maxLength: 200
+        slug:
+          type: string
+          maxLength: 200
+          pattern: ^[-a-zA-Z0-9_]+$
         description:
           type: string
           maxLength: 5000
-        contents:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
+        contents_url:
+          type: string
           readOnly: true
       required:
-      - contents
+      - contents_url
+      - slug
       - title
     Subject:
       type: object

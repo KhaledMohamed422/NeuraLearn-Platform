@@ -10,3 +10,14 @@ class IsAdminOrEnrolled(BasePermission):
             # if the user is admin then 
             return True
         return obj.students.filter(id=request.user.id).exists()
+    
+
+class IsAdminOrEnrolledModule(BasePermission):
+    message = 'You Must Enroll this course'
+
+    def has_object_permission(self, request, view, obj):
+        user = request.user
+        if user.is_superuser:
+            # if the user is admin then 
+            return True
+        return obj.course.students.filter(id=request.user.id).exists()
