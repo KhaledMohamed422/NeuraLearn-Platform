@@ -99,7 +99,7 @@ class Summarizer(APIView):
 @extend_schema(
     tags=['Question Generation'],
     responses={200: VideoTranscriptSerializer(many=True)},
-    requests = VideoTranscriptSerializer
+    request = VideoTranscriptSerializer
     # parameters=[
     #     {
     #         'name': 'id',
