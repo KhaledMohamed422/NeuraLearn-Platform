@@ -10,8 +10,13 @@ from rest_framework.generics import get_object_or_404
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 from courses.models import Module, Video
 from time import sleep
-from .serializers import VideoTranscriptSerializer, SummarizerSerializer, Transcripts ,QuestionGenerationSerializer
-from .utils import generate_questions
+from .serializers import (VideoTranscriptSerializer,
+                          SummarizerSerializer,
+                          Transcripts ,
+                          QuestionGenerationSerializer,
+                          ChatBotRequestSerializer,
+                          ChatBotResponseSerializer)
+from .utils import generate_questions , generate_answer
 
 URL = settings.SUMMARIZER_MODEL_URL
 TOKEN = settings.SUMMARIZER_TOKEN
@@ -138,3 +143,33 @@ class QuestionGeneration(APIView):
             return Response({"questions": questions}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@extend_schema(
+    tags=['Question Answer (Chatbot)'],
+    request=ChatBotRequestSerializer,
+    responses={200: ChatBotResponseSerializer(many=True)}
+)
+class ChatBotAPIView(APIView):
+    def post(self, request):
+        serializer = ChatBotRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            context = serializer.validated_data['context']
+            question = serializer.validated_data['question']
+            chat_history = serializer.validated_data['chat_history']
+            k = serializer.validated_data['k']
+            
+            # Send data to the model server
+            payload = {
+                "context": context,
+                "question": question,
+                "chat_history": chat_history ,
+                "k" : k
+            }
+            response = generate_answer(payload)
+            if response.status_code == 200:
+                response_data = response.json()
+                return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Model server error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

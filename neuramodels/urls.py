@@ -8,5 +8,4 @@ urlpatterns = [
     path('video/<int:id>/transcript/', views.VideoGetTranscript.as_view(), name='video-get-transcript'),
     path('summarize/', views.Summarizer.as_view(), name='summarizer'),
     path('generate-questions/', views.QuestionGeneration.as_view(), name='question_generation'),
-
 ]
