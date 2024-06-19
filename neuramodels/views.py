@@ -99,15 +99,16 @@ class Summarizer(APIView):
 @extend_schema(
     tags=['Question Generation'],
     responses={200: VideoTranscriptSerializer(many=True)},
-    parameters=[
-        {
-            'name': 'id',
-            'required': True,
-            'location': 'path',
-            'description': 'ID of the video to retrieve transcript for',
-            'schema': {'type': 'integer'}
-        }
-    ]
+    requests = VideoTranscriptSerializer
+    # parameters=[
+    #     {
+    #         'name': 'id',
+    #         'required': True,
+    #         'location': 'path',
+    #         'description': 'ID of the video to retrieve transcript for',
+    #         'schema': {'type': 'integer'}
+    #     }
+    # ]
 )
 class VideoGetTranscript(APIView):
     permission_classes = [IsAuthenticated]
@@ -146,8 +147,8 @@ class QuestionGeneration(APIView):
 
 @extend_schema(
     tags=['Question Answer'],
-    # request=ChatBotRequestSerializer,
-    # responses={200: ChatBotResponseSerializer(many=True)}
+    request=ChatBotRequestSerializer,
+    responses={200: ChatBotResponseSerializer(many=True)}
 )
 class ChatBotAPIView(APIView):
     def post(self, request):
