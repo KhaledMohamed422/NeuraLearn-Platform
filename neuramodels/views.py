@@ -146,7 +146,7 @@ class QuestionGeneration(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @extend_schema(
-    tags=['Question Answer'],
+    tags=['Question Answer (chatbot)'],
     request=ChatBotRequestSerializer,
     responses={200: ChatBotResponseSerializer(many=True)}
 )
