@@ -146,8 +146,8 @@ class QuestionGeneration(APIView):
 
 @extend_schema(
     tags=['Question Answer'],
-    request=ChatBotRequestSerializer,
-    responses={200: ChatBotResponseSerializer(many=True)}
+    # request=ChatBotRequestSerializer,
+    # responses={200: ChatBotResponseSerializer(many=True)}
 )
 class ChatBotAPIView(APIView):
     def post(self, request):
