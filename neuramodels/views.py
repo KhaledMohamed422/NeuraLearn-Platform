@@ -145,9 +145,9 @@ class QuestionGeneration(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @extend_schema(
-    tags=['Question Answer (Chatbot)'],
+    tags=['Question Answer'],
     request=ChatBotRequestSerializer,
-    responses={200: dict}
+    responses={200: ChatBotResponseSerializer(many=True)}
 )
 class ChatBotAPIView(APIView):
     def post(self, request):
@@ -157,7 +157,7 @@ class ChatBotAPIView(APIView):
             question = serializer.validated_data['question']
             chat_history = serializer.validated_data['chat_history']
             k = serializer.validated_data['k']
-
+            
             # Send data to the model server
             payload = {
                 "context": context,
