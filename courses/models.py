@@ -11,6 +11,7 @@ from .fields import OrderField
 class Subject(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
+    image = models.ImageField(upload_to='subjects/%Y/%m/%d/', blank=True)
 
     class Meta:
         ordering = ['title']

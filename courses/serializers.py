@@ -6,7 +6,7 @@ from drf_spectacular.utils import extend_schema_field
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = ['id', 'title', 'slug']
+        fields = ['id', 'title', 'slug', 'image']
     
 #---------------------
 # Courses Serializers

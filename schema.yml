@@ -887,6 +887,65 @@ paths:
                 items:
                   $ref: '#/components/schemas/Subject'
           description: ''
+  /api/models/chatbot/:
+    post:
+      operationId: api_models_chatbot_create
+      tags:
+      - Question Answer (chatbot)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatBotRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChatBotRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChatBotRequest'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatBotResponse'
+          description: ''
+  /api/models/generate-questions/:
+    post:
+      operationId: api_models_generate_questions_create
+      tags:
+      - Question Generation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionGeneration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuestionGeneration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuestionGeneration'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/models/module/{slug}/transcripts/:
     get:
       operationId: api_models_module_transcripts_retrieve
@@ -948,6 +1007,30 @@ paths:
           description: Transcript not generated yet
         '404':
           description: Module not found
+  /api/models/video/{id}/transcript/:
+    get:
+      operationId: api_models_video_transcript_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Question Generation
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoTranscript'
+          description: ''
   /api/public/course/{slug}/detail/:
     get:
       operationId: api_public_course_detail_retrieve
@@ -1784,6 +1867,31 @@ components:
       required:
       - token
       - uid
+    ChatBotRequest:
+      type: object
+      properties:
+        context:
+          type: string
+          maxLength: 5000
+        question:
+          type: string
+          maxLength: 1000
+        chat_history: {}
+        k:
+          type: integer
+      required:
+      - chat_history
+      - context
+      - k
+      - question
+    ChatBotResponse:
+      type: object
+      properties:
+        response:
+          type: string
+          maxLength: 5000
+      required:
+      - response
     Course:
       type: object
       properties:
@@ -2236,6 +2344,14 @@ components:
       - contents
       - slug
       - title
+    QuestionGeneration:
+      type: object
+      properties:
+        transcript:
+          type: string
+          maxLength: 5000
+      required:
+      - transcript
     SendEmailReset:
       type: object
       properties:
@@ -2380,6 +2496,9 @@ components:
           type: string
           maxLength: 200
           pattern: ^[-a-zA-Z0-9_]+$
+        image:
+          type: string
+          format: uri
       required:
       - id
       - slug
