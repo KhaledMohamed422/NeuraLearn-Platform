@@ -71,8 +71,8 @@ def transcript(id):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-@shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
 def transcript_video(id, *args, **kwargs):
+    print(id)
     try:
         obj = Video.objects.get(id=id)
 
