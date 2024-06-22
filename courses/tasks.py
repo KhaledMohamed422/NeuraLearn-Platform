@@ -71,6 +71,7 @@ def transcript(id):
     except Exception as e:
         print(f"An error occurred: {e}")
 
+@shared_task
 def transcript_video(id, *args, **kwargs):
     print(id)
     try:
