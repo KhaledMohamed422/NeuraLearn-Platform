@@ -264,7 +264,6 @@ class ContentVideoCreateAPIView(generics.CreateAPIView):
                                        slug=slug,
                                        course__owner=self.request.user)
         content = serializer.save(owner=self.request.user)
-        print(content.id)
         transcript_video.delay(content.id)
         Content.objects.create(module=module, item=content)
 

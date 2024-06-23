@@ -1,0 +1,381 @@
+[
+{
+  "model": "courses.subject",
+  "pk": 1,
+  "fields": {
+    "title": "Mathematics",
+    "slug": "mathematics",
+    "image": ""
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 2,
+  "fields": {
+    "title": "Physics",
+    "slug": "physics",
+    "image": ""
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 3,
+  "fields": {
+    "title": "Programming",
+    "slug": "programming",
+    "image": "subjects/2024/06/22/programming.jpeg"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 4,
+  "fields": {
+    "title": "Managment",
+    "slug": "managment",
+    "image": "subjects/2024/06/22/managment.jpeg"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 5,
+  "fields": {
+    "title": "Data Science",
+    "slug": "data-science",
+    "image": "subjects/2024/06/22/data-science.jpeg"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 6,
+  "fields": {
+    "title": "Design",
+    "slug": "design",
+    "image": "subjects/2024/06/22/design.jpeg"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 7,
+  "fields": {
+    "title": "Finance",
+    "slug": "finance",
+    "image": "subjects/2024/06/22/finance.jpeg"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 8,
+  "fields": {
+    "title": "Marketing",
+    "slug": "marketing",
+    "image": ""
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 9,
+  "fields": {
+    "title": "Hardware",
+    "slug": "hardware",
+    "image": ""
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 10,
+  "fields": {
+    "title": "Electronics",
+    "slug": "electronics",
+    "image": ""
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "owner": 2,
+    "subject": 3,
+    "title": "30 Days to Learn HTML & CSS (Full Course)",
+    "slug": "30-days-to-learn-html-css-full-course",
+    "overview": "Even if your goal is not to become a web designer, learning HTML and CSS can be an amazing tool to have in your skill-set -- both in the workplace, and at home. If this has been on your to-do list for some time, why don't you take thirty days and join me? Give me around ten minutes every day, and I'll teach you the essentials of HTML and CSS.\r\n\r\nAnd don't worry... we start at the beginning!\r\n\r\nThis is part of the free Envato Tuts+ course 30 Days to Learn HTML & CSS: https://webdesign.tutsplus.com/course...\r\n\r\nNote: this course was published in 2012. Many of the tools and practices have changed and improved since recording, but the core principles are still relevant.\r\n\r\nFor more great web design courses and tutorials go to: https://webdesign.tutsplus.com/?utm_c...",
+    "image": "courses/2024/05/08/evanto.webp",
+    "price": "0.00",
+    "created": "2024-05-08T09:56:16.757Z",
+    "available": true,
+    "updated": "2024-06-23T01:16:51.227Z",
+    "students": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 2,
+  "fields": {
+    "owner": 4,
+    "subject": 1,
+    "title": "Django Rest-framework",
+    "slug": "django-rest-framework",
+    "overview": "Even if your goal is not to become a web designer, learning HTML and CSS can be an amazing tool to have in your skill-set -- both in the workplace, and at home. If this has been on your to-do list for some time, why don't you take thirty days and join me? Give me around ten minutes every day, and I'll teach you the essentials of HTML and CSS.\n\nAnd don't worry... we start at the beginning!\n\nThis is part of the free Envato Tuts+ course 30 Days to Learn HTML & CSS: https://webdesign.tutsplus.com/course...\n\nNote: this course was published in 2012. Many of the tools and practices have changed and improved since recording, but the core principles are still relevant.\n\nFor more great web design courses and tutorials go to: https://webdesign.tutsplus.com/?utm_c...",
+    "image": "courses/2024/06/10/evanto.webp",
+    "price": "0.00",
+    "created": "2024-06-10T16:24:31.217Z",
+    "available": true,
+    "updated": "2024-06-12T16:45:36.965Z",
+    "students": []
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 1,
+  "fields": {
+    "course": 1,
+    "title": "Day 1",
+    "slug": "day-1",
+    "description": "",
+    "order": 0
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 2,
+  "fields": {
+    "course": 1,
+    "title": "Day 2",
+    "slug": "day-2",
+    "description": "",
+    "order": 1
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 3,
+  "fields": {
+    "course": 1,
+    "title": "Day 3",
+    "slug": "day-3",
+    "description": "",
+    "order": 2
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 4,
+  "fields": {
+    "course": 1,
+    "title": "Day 4",
+    "slug": "day-4",
+    "description": "",
+    "order": 3
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 5,
+  "fields": {
+    "course": 1,
+    "title": "Day 5",
+    "slug": "day-5",
+    "description": "this is day 5",
+    "order": 4
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 6,
+  "fields": {
+    "course": 1,
+    "title": "Day 6",
+    "slug": "day-6",
+    "description": "this is day 6",
+    "order": 5
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 1,
+  "fields": {
+    "uuid": "0898dc4c-6e34-4254-81e8-1083c6d3cf70",
+    "module": 1,
+    "content_type": 11,
+    "object_id": 1,
+    "order": 0
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 2,
+  "fields": {
+    "uuid": "0c133e8e-d452-4be2-a4d0-3dbe684671d9",
+    "module": 2,
+    "content_type": 11,
+    "object_id": 2,
+    "order": 1
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 3,
+  "fields": {
+    "uuid": "34f8d642-edd4-468c-8733-1dad3de8d260",
+    "module": 3,
+    "content_type": 11,
+    "object_id": 3,
+    "order": 2
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 5,
+  "fields": {
+    "uuid": "5a1143ec-bbee-4eaf-b994-cdb01eac69ef",
+    "module": 1,
+    "content_type": 12,
+    "object_id": 1,
+    "order": 4
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 6,
+  "fields": {
+    "uuid": "2817cac9-7feb-4819-9985-043c10f67345",
+    "module": 2,
+    "content_type": 12,
+    "object_id": 2,
+    "order": 6
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 7,
+  "fields": {
+    "uuid": "1f7ff2f7-ec87-4457-9734-64473b2975de",
+    "module": 3,
+    "content_type": 12,
+    "object_id": 3,
+    "order": 3
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 8,
+  "fields": {
+    "uuid": "fab02add-8400-48c5-b22a-0b2484adcb86",
+    "module": 5,
+    "content_type": 12,
+    "object_id": 5,
+    "order": 5
+  }
+},
+{
+  "model": "courses.content",
+  "pk": 9,
+  "fields": {
+    "uuid": "2d59ab32-bab0-4fe2-924c-51ffe413b5ba",
+    "module": 6,
+    "content_type": 12,
+    "object_id": 6,
+    "order": 7
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 1,
+  "fields": {
+    "owner": 2,
+    "title": "Your First Webpage",
+    "created": "2024-05-08T11:39:23.097Z",
+    "updated": "2024-05-08T11:39:23.097Z",
+    "content": "Your First Webpage"
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 2,
+  "fields": {
+    "owner": 2,
+    "title": "Finding a Proper Code Editor",
+    "created": "2024-05-08T11:44:35.799Z",
+    "updated": "2024-05-08T11:44:35.799Z",
+    "content": "Finding a Proper Code Editor"
+  }
+},
+{
+  "model": "courses.text",
+  "pk": 3,
+  "fields": {
+    "owner": 2,
+    "title": "Lists",
+    "created": "2024-05-08T11:44:52.782Z",
+    "updated": "2024-05-08T11:44:52.782Z",
+    "content": "Lists"
+  }
+},
+{
+  "model": "courses.video",
+  "pk": 1,
+  "fields": {
+    "owner": 2,
+    "title": "lecture 1",
+    "created": "2024-06-23T01:25:36.323Z",
+    "updated": "2024-06-23T01:25:36.323Z",
+    "file": "videos/2024/06/23/Day_1_Your_First_Webpage_30_Days_to_Learn_HTML__CSS_bfqBUDk99Tc.mp4",
+    "transcript": null,
+    "summariztion": null
+  }
+},
+{
+  "model": "courses.video",
+  "pk": 2,
+  "fields": {
+    "owner": 2,
+    "title": "lecture2",
+    "created": "2024-06-23T01:27:31.105Z",
+    "updated": "2024-06-23T01:27:31.105Z",
+    "file": "videos/2024/06/23/Day_2_Finding_a_Proper_Code_Editor_30_Days_to_Learn_HTML__CSS_-8IoQTg5Ybs.mp4",
+    "transcript": null,
+    "summariztion": null
+  }
+},
+{
+  "model": "courses.video",
+  "pk": 3,
+  "fields": {
+    "owner": 2,
+    "title": "Lecture 3",
+    "created": "2024-06-23T01:31:38.115Z",
+    "updated": "2024-06-23T01:31:38.115Z",
+    "file": "videos/2024/06/23/Day_3_Lists_30_Days_to_Learn_HTML__CSS_KHT6scxGm38.mp4",
+    "transcript": null,
+    "summariztion": null
+  }
+},
+{
+  "model": "courses.video",
+  "pk": 5,
+  "fields": {
+    "owner": 2,
+    "title": "Day 5 lecture",
+    "created": "2024-06-23T00:24:46.821Z",
+    "updated": "2024-06-23T00:24:46.821Z",
+    "file": "videos/2024/06/23/Day_5_Heading_Tags_30_Days_to_Learn_HTML__CSS.mp4",
+    "transcript": null,
+    "summariztion": null
+  }
+},
+{
+  "model": "courses.video",
+  "pk": 6,
+  "fields": {
+    "owner": 4,
+    "title": "Day 6",
+    "created": "2024-06-22T22:20:26.317Z",
+    "updated": "2024-06-23T07:15:01.053Z",
+    "file": "videos/2024/06/23/Day_6_Blockquotes_30_Days_to_Learn_HTML__CSS_P7KU6mqdmJ0.mp4",
+    "transcript": "Sometimes we need to quote somebody, whether it's a book passage or something somebody said on a different blog. There's a lot of different uses. Think of it just when writing a normal article with pen and paper. There are sometimes when you need to quote somebody, and we can do that within HTML as well by using what's known as the block quote element. Now, within here, this is a way to tell the browser anything within here is a quote. So why don't we reference an Einstein quote? I've pulled up a list of some of his quotes. Let's get one of these. So within here, it is a paragraph, so I'm going to make sure that I add a P tag, paste it in, and close out my paragraph as well. And remember what we learned about indentation? It's a good practice to make sure we indent so it's easy to tell that this paragraph is is a child of the block quote. Good, so let's save that and view it in the browser. So if I view it, it may not look like anything special to you and that's okay because remember, if you were expecting maybe big shiny quotation marks or at least the text to be italic, that's not what markup is about. Markup does not specify formatting or font weight or font style. It's simply to describe your content and that's something you always need to remember. So you might be thinking, well, why would I ever use that? It's just as easy to do this. I get the same effect and it's less markup. And it's because we are describing our content and that is equally important, whether it be for screen readers or for future proofing our markup. So let's save that. And if I view the source, once again, you can go to View, Developer, Source, or I always press Control Command U on the Mac. And now we have given the browser some understanding as to what this specific content is. So just remember if you're writing a blog posting, if you're doing a website, anytime you need to provide a call out, and it's again a nice way when creating blog postings to divide your content. Once again, if we refer to NetTouch, you can see that we use block quotes like so. Let's check it out. Inspect element. And once again, you can see that it is wrapped within a block quote. And within here we have our quote. And then we're using styling or cascading style sheets to make the text italic, to add a quotation mark here to make it look like a quote. But the markup alone is simply a block quote with the paragraph tag in it.",
+    "summariztion": null
+  }
+}
+]

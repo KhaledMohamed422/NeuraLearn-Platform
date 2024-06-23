@@ -5,14 +5,12 @@ from celery import shared_task
 from django.core.mail import send_mail
 from .models import Course, Content, Video
 from django.conf import settings
+from moviepy.editor import VideoFileClip
 from time import sleep
 import logging
 
 URL = settings.TRANSCRIPT_MODEL_URL
-TOKEN = settings.TRANSCRIPT_TOKEN
 MEDIA_ROOT = settings.MEDIA_ROOT
-
-headers = {"Authorization": f"Bearer {TOKEN}"}
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +21,12 @@ def convert_video_to_audio(video_path, audio_path):
     if os.path.exists(audio_path):
         print(f"Audio file already exists at {audio_path}")
         return
-    
+
     try:
-        subprocess.run(['ffmpeg', '-i', video_path, '-vn', '-acodec', 'libmp3lame', audio_path], check=True)
-    except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"FFmpeg command failed with error code {e.returncode}.") from e
+        video = VideoFileClip(video_path)
+        video.audio.write_audiofile(audio_path)    
+    except Exception as e:
+        raise RuntimeError(f"Converting video to audio failed with error code {e.returncode}.")
 
 
 # Celery Tasks
@@ -86,7 +85,7 @@ def transcript_video(id, *args, **kwargs):
         with open(extracted_audio_path, "rb") as f:
             data = f.read()
         for i in range(5):
-            r = requests.post(URL, headers=headers, data=data)
+            r = requests.post(URL, data=data)
             response = r.json()
             if 'error' not in response:
                 obj.transcript = response['text']
@@ -94,6 +93,6 @@ def transcript_video(id, *args, **kwargs):
                 break
             else:
                 logger.error(f"Transcription error: {response['error']}")
-            sleep(20)
+            sleep(10)
     except Exception as e:
         logger.exception(f"Failed to transcribe video {id}: {e}")

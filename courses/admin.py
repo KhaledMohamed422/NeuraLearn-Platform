@@ -27,12 +27,15 @@ class ModuleAdmin(admin.ModelAdmin):
     inlines = [ContentInline]
 
 
-admin.site.register(Content)
+@admin.register(Content)
+class ContentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'module', 'content_type', 'object_id', 'order']
+
 admin.site.register(Text)
 admin.site.register(File)
 admin.site.register(Image)
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'transcript']
+    list_display = ['id', 'title', 'transcript', 'file']
     list_editable = ['transcript']
