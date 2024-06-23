@@ -177,13 +177,19 @@ class ContentTextCreateAPIView(generics.CreateAPIView):
 
 @extend_schema(tags=['Contents'])
 class ContentTextUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Text.objects.all()
+    content = None 
+    queryset = Content.objects.all()
     serializer_class = TextSerializer
     permission_classes = [IsInstructorPermission]
 
     def get_object(self):
         id = self.kwargs.get('id')
-        return generics.get_object_or_404(Text, id=id, owner=self.request.user)
+        self.content = generics.get_object_or_404(Content, id=id)
+        return self.content.item
+    
+    def perform_destroy(self, instance):
+        self.content.item.delete()
+        self.content.delete()
 
 
 @extend_schema(tags=['Contents'])
@@ -202,13 +208,19 @@ class ContentFileCreateAPIView(generics.CreateAPIView):
 
 @extend_schema(tags=['Contents'])
 class ContentFileUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = File.objects.all()
+    content = None
+    queryset = Content.objects.all()
     serializer_class = FileSerializer
     permission_classes = [IsInstructorPermission]
 
     def get_object(self):
         id = self.kwargs.get('id')
-        return generics.get_object_or_404(File, id=id, owner=self.request.user)
+        self.content = generics.get_object_or_404(Content, id=id)
+        return self.content.item
+    
+    def perform_destroy(self, instance):
+        self.content.item.delete()
+        self.content.delete()
     
 @extend_schema(tags=['Contents'])
 class ContentImageCreateAPIView(generics.CreateAPIView):
@@ -226,13 +238,19 @@ class ContentImageCreateAPIView(generics.CreateAPIView):
 
 @extend_schema(tags=['Contents'])
 class ContentImageUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Image.objects.all()
+    content = None
+    queryset = Content.objects.all()
     serializer_class = ImageSerializer
     permission_classes = [IsInstructorPermission]
 
     def get_object(self):
         id = self.kwargs.get('id')
-        return generics.get_object_or_404(Image, id=id, owner=self.request.user)
+        self.content = generics.get_object_or_404(Content, id=id)
+        return self.content.item
+    
+    def perform_destroy(self, instance):
+        self.content.item.delete()
+        self.content.delete()
     
 @extend_schema(tags=['Contents'])
 class ContentVideoCreateAPIView(generics.CreateAPIView):
@@ -252,10 +270,16 @@ class ContentVideoCreateAPIView(generics.CreateAPIView):
 
 @extend_schema(tags=['Contents'])
 class ContentVideoUpdateDestroAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Video.objects.all()
+    content = None
+    queryset = Content.objects.all()
     serializer_class = VideoSerializer
     permission_classes = [IsInstructorPermission]
 
     def get_object(self):
         id = self.kwargs.get('id')
-        return generics.get_object_or_404(Video, id=id, owner=self.request.user)
+        self.content = generics.get_object_or_404(Content, id=id)
+        return self.content.item
+    
+    def perform_destroy(self, instance):
+        self.content.item.delete()
+        self.content.delete()

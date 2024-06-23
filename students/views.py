@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from drf_spectacular.utils import extend_schema
 from courses.models import Course, Module
 from drf_spectacular.utils import extend_schema
@@ -37,6 +38,7 @@ class StudentModuleContentListAPIView(generics.RetrieveAPIView):
 @extend_schema(tags=['Students'])
 class CourseEnrollView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [BasicAuthentication, JWTAuthentication]
     serializer_class = None
 
     def post(self, request, slug, format=None):

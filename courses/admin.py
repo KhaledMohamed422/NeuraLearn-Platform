@@ -8,6 +8,9 @@ class SubjectAdmin(admin.ModelAdmin):
 
 class ModuleInline(admin.StackedInline):
     model = Module
+
+class ContentInline(admin.StackedInline):
+    model = Content
     
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -21,6 +24,8 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
     list_display = ['id','title', 'slug']
+    inlines = [ContentInline]
+
 
 admin.site.register(Content)
 admin.site.register(Text)

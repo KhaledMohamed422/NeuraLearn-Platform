@@ -19,7 +19,6 @@ from .serializers import (VideoTranscriptSerializer,
 from .utils import generate_questions , generate_answer
 
 URL = settings.SUMMARIZER_MODEL_URL
-TOKEN = settings.SUMMARIZER_TOKEN
 
 """
     Summarization
