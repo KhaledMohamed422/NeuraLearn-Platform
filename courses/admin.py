@@ -14,7 +14,7 @@ class ContentInline(admin.StackedInline):
     
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['id','title', 'subject', 'created', 'available']
+    list_display = ['id','title','slug', 'subject', 'created', 'available']
     list_filter = ['created', 'subject']
     list_editable = ['available']
     search_fields = ['title', 'overview']
