@@ -6,28 +6,15 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'slug']
     prepopulated_fields = {'slug': ('title',)}
 
-class TextInline(admin.StackedInline):
-    model = Text
-
-class FileInline(admin.StackedInline):
-    model = File
-
-class ImageInline(admin.StackedInline):
-    model = Image
-
-class VideoInline(admin.StackedInline):
-    model = Video
+class ModuleInline(admin.StackedInline):
+    model = Module
 
 class ContentInline(admin.StackedInline):
     model = Content
-
-class ModuleInline(admin.StackedInline):
-    model = Module
-    inlines = [ContentInline, TextInline, FileInline, ImageInline, VideoInline]
-
+    
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'slug', 'subject', 'created', 'available']
+    list_display = ['id','title','slug', 'subject', 'created', 'available']
     list_filter = ['created', 'subject']
     list_editable = ['available']
     search_fields = ['title', 'overview']
@@ -36,24 +23,12 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'slug']
-    inlines = [ContentInline, TextInline, FileInline, ImageInline, VideoInline]
+    list_display = ['id','title', 'slug']
 
-@admin.register(Content)
-class ContentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'module', 'content_type', 'object_id']
-
-@admin.register(Text)
-class TextAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'content', 'owner']
-
-@admin.register(File)
-class FileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'file', 'owner']
-
-@admin.register(Image)
-class ImageAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'file', 'owner']
+admin.site.register(Content)
+admin.site.register(Text)
+admin.site.register(File)
+admin.site.register(Image)
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
