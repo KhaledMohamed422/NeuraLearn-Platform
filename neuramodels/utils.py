@@ -43,5 +43,5 @@ def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     "chunk_size": 400,
     "chunk_overlap":50
     }
-    response = requests.post(url="/{SERVER_MODEL_URL}/neuarlearn/ml/chat", json=payload)
+    response = requests.post(url=f"/{SERVER_MODEL_URL}/neuarlearn/ml/chat", json=payload)
     return response
