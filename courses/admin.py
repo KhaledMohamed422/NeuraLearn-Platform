@@ -24,13 +24,8 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
     list_display = ['id','title', 'slug']
-    inlines = [ContentInline]
 
-
-@admin.register(Content)
-class ContentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'module', 'content_type', 'object_id', 'order']
-
+admin.site.register(Content)
 admin.site.register(Text)
 admin.site.register(File)
 admin.site.register(Image)

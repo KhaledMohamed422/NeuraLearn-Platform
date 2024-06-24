@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 import requests
 from django.conf import settings
 from rest_framework import status
@@ -153,19 +154,13 @@ class ChatBotAPIView(APIView):
     def post(self, request):
         serializer = ChatBotRequestSerializer(data=request.data)
         if serializer.is_valid():
-            context = serializer.validated_data['context']
+            
+            slug = serializer.validated_data['slug']
             question = serializer.validated_data['question']
             chat_history = serializer.validated_data['chat_history']
             k = serializer.validated_data['k']
             
-            # Send data to the model server
-            payload = {
-                "context": context,
-                "question": question,
-                "chat_history": chat_history ,
-                "k" : k
-            }
-            response = generate_answer(payload)
+            response = generate_answer(slug,question,chat_history,k)
             if response.status_code == 200:
                 response_data = response.json()
                 return Response(response_data, status=status.HTTP_200_OK)
