@@ -12,7 +12,7 @@ def get_course_transcripts(course_slug):
     all_transcripts = ""
 
     for module in modules:
-        
+        print(module)
         video_contents = Content.objects.filter(module=module, content_type=video_content_type)
         
         for content in video_contents:
