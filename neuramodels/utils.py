@@ -44,6 +44,7 @@ def generate_questions(text : str) -> str:
 
     list_of_text = [one_video_transcript for one_video_transcript in text.split('$#@') if one_video_transcript]
     print(list_of_text)
+    print(len(list_of_text))
     
     return {"key" , True}
     # for text in list_of_text:
