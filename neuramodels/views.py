@@ -169,7 +169,7 @@ class QuestionGenerationView(APIView):
 
 @extend_schema(
     tags=['Question Answer (chatbot)'],
-    request=QuestionGenerationSerializer,
+    request=ChatBotRequestSerializer,
     responses={200: ChatBotResponseSerializer(many=True)}
 )
 class ChatBotAPIView(APIView):
