@@ -32,7 +32,7 @@ def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     context = get_course_transcripts(course_slug)
     print(context)
     if not context:
-        context = ""
+        context = "None"
     payload = {
     "context": context,
     "question": question,
