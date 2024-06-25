@@ -50,11 +50,8 @@ def generate_questions(text : str) -> str:
         
         payload = {"transcript":context,"types":[2],"chunk_size":3000,'chunk_overlap':500}
         response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
-        print(response)
-        # final_questions.append(response.json())
+        final_questions.append(response.json())
 
-
-    # return {"key" : "done"}
     return final_questions
 
 
