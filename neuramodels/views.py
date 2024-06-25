@@ -158,11 +158,10 @@ class GetTranscript(APIView):
 class QuestionGenerationView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request,slug=None):
+    def post(self, request):
         serializer = Transcripts(data=request.data)
         if serializer.is_valid():
             text = serializer.validated_data['text']
-            print(type(text))
             questions_generation = generate_questions(text)
             return Response({"responses": questions_generation}, status=status.HTTP_200_OK)
         else:
