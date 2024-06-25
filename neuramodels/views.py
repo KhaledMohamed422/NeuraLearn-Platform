@@ -14,10 +14,10 @@ from time import sleep
 from .serializers import (VideoTranscriptSerializer,
                           SummarizerSerializer,
                           Transcripts ,
-                          QuestionGenerationSerializer,
+                          GetTranscriptSerializer,
                           ChatBotRequestSerializer,
                           ChatBotResponseSerializer)
-from .utils import generate_questions , generate_answer
+from .utils import generate_questions , generate_answer , get_module_transcripts
 
 URL = settings.SUMMARIZER_MODEL_URL
 
@@ -110,38 +110,38 @@ class Summarizer(APIView):
     #     }
     # ]
 )
-class VideoGetTranscript(APIView):
-    permission_classes = [IsAuthenticated]
+# class VideoGetTranscript(APIView):
+#     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id=None):
-        video = get_object_or_404(Video, id=id, owner=request.user)
-        data = {}
+#     def get(self, request, id=None):
+#         video = get_object_or_404(Video, id=id, owner=request.user)
+#         data = {}
 
-        # Check if video already transcripted 
-        if video.transcript:
-            data = VideoTranscriptSerializer(video).data
-        else:
-            return Response(
-                {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+#         # Check if video already transcripted 
+#         if video.transcript:
+#             data = VideoTranscriptSerializer(video).data
+#         else:
+#             return Response(
+#                 {"error": f"Transcript for video '{video.title}' is not generated yet, please wait some time."},
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
 
-        return Response(data, status=status.HTTP_200_OK)
+#         return Response(data, status=status.HTTP_200_OK)
 
 @extend_schema(
     tags=['Question Generation'],
-    request=QuestionGenerationSerializer,
+    request=GetTranscriptSerializer,
     responses={200: dict}
 )
-class QuestionGeneration(APIView):
+class GetTranscript(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        serializer = QuestionGenerationSerializer(data=request.data)
+        serializer = GetTranscriptSerializer(data=request.data)
         if serializer.is_valid():
-            transcript = serializer.validated_data['transcript']
-            questions = generate_questions(transcript)
-            return Response({"questions": questions}, status=status.HTTP_200_OK)
+            slug = serializer.validated_data['slug']
+            transcript = get_module_transcripts(slug)
+            return Response({"transcript": transcript}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

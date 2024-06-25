@@ -12,19 +12,41 @@ def get_course_transcripts(course_slug):
     all_transcripts = ""
 
     for module in modules:
-        # print(module)
+
         video_contents = Content.objects.filter(module=module, content_type=video_content_type)
         
         for content in video_contents:
             video = Video.objects.get(id=content.object_id)
             if video.transcript:
                 all_transcripts += video.transcript + "\n"
-    # print(f"**************************************All transcripts: {all_transcripts}**************************************")
+
+    return all_transcripts
+
+def get_module_transcripts(course_slug):
+
+    course = Course.objects.get(slug=course_slug)    
+    video_content_type = ContentType.objects.get(model='video')
+
+    modules = course.modules.all()
+
+    all_transcripts = ""
+
+    for module in modules:
+
+        video_contents = Content.objects.filter(module=module, content_type=video_content_type)
+        
+        for content in video_contents:
+            video = Video.objects.get(id=content.object_id)
+            if video.transcript:
+                all_transcripts += video.transcript + "\n"
+
     return all_transcripts
 
 
-def generate_questions(text : str) -> str:
-    pass
+def generate_questions(module_slug : str) -> str:
+    transcripts = get_module_transcripts(module_slug)
+    print(transcripts)
+
 
 
 def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
