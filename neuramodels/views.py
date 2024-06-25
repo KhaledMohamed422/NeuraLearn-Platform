@@ -96,10 +96,10 @@ class Summarizer(APIView):
         return Response(serializer.errors, status=400)
     
 
-@extend_schema(
-    tags=['Question Generation'],
-    responses={200: VideoTranscriptSerializer(many=True)},
-    request = VideoTranscriptSerializer
+# @extend_schema(
+#     tags=['Question Generation'],
+#     responses={200: VideoTranscriptSerializer(many=True)},
+#     request = VideoTranscriptSerializer
     # parameters=[
     #     {
     #         'name': 'id',
@@ -109,7 +109,7 @@ class Summarizer(APIView):
     #         'schema': {'type': 'integer'}
     #     }
     # ]
-)
+# )
 # class VideoGetTranscript(APIView):
 #     permission_classes = [IsAuthenticated]
 
