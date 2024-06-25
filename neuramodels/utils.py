@@ -52,8 +52,8 @@ def generate_questions(text : str) -> str:
         response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
         final_questions.append(response.json())
 
-    return {"key" : "done"}
-    # return final_questions
+    # return {"key" : "done"}
+    return final_questions
 
 
 
