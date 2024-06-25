@@ -35,7 +35,7 @@ def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     if not context:
         context = "None Context"
     payload = {
-    "context": context+"None Context",
+    "context": "None Context",
     "question": question,
     "k": k,
     "type": 3,
