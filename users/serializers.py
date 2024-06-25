@@ -23,7 +23,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         # Add the user to the 'instructor' group if is_instructor is True
         if is_instructor:
             try:
-                instructor_group, created = Group.objects.get_or_create(name='instructor')
+                instructor_group, created = Group.objects.get_or_create(name='Instructors')
                 user.groups.add(instructor_group)
                 user.save()
                 print(f"User {user.email} added to 'instructor' group.")
