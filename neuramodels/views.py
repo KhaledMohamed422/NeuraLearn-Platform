@@ -130,20 +130,21 @@ class Summarizer(APIView):
 
 @extend_schema(
     tags=['Question Generation'],
-    request=GetTranscriptSerializer,
+    # request=GetTranscriptSerializer,
     responses={200: dict}
 )
 class GetTranscript(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        serializer = GetTranscriptSerializer(data=request.data)
-        if serializer.is_valid():
-            slug = serializer.validated_data['slug']
+    def post(self, request,slug=None):
+        # serializer = GetTranscriptSerializer(data=request.data)
+        # if serializer.is_valid():
+            # slug = serializer.validated_data['slug']
+        if slug:
             transcript = get_module_transcripts(slug)
             return Response({"transcript": transcript}, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response("module not exist", status=status.HTTP_400_BAD_REQUEST)
 
 @extend_schema(
     tags=['Question Answer (chatbot)'],
