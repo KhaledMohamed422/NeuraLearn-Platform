@@ -141,7 +141,10 @@ class GetTranscript(APIView):
         # if serializer.is_valid():
             # slug = serializer.validated_data['slug']
         if slug:
-            transcript = get_module_transcripts(slug)
+            try:
+                transcript = get_module_transcripts(slug)
+            except:
+                return Response("module not exist", status=status.HTTP_400_BAD_REQUEST)
             return Response({"transcript": transcript}, status=status.HTTP_200_OK)
         else:
             return Response("module not exist", status=status.HTTP_400_BAD_REQUEST)
