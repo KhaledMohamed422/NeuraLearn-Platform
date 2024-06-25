@@ -24,19 +24,18 @@ def get_course_transcripts(course_slug):
 
 def get_module_transcripts(module_slug):
 
-    modules = Module.objects.get(slug=module_slug).modules.all()
+    module = Module.objects.get(slug=module_slug)
     video_content_type = ContentType.objects.get(model='video')
 
     all_transcripts = ""
 
-    for module in modules:
 
-        video_contents = Content.objects.filter(module=module, content_type=video_content_type)
-        
-        for content in video_contents:
-            video = Video.objects.get(id=content.object_id)
-            if video.transcript:
-                all_transcripts += video.transcript + "\n"
+    video_contents = Content.objects.filter(module=module, content_type=video_content_type)
+    
+    for content in video_contents:
+        video = Video.objects.get(id=content.object_id)
+        if video.transcript:
+            all_transcripts += video.transcript + "\n"
 
     return all_transcripts
 
