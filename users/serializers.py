@@ -16,5 +16,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         if is_instructor:
             instructor_group, created = Group.objects.get_or_create(name='instructor')
             user.groups.add(instructor_group)
-        
+            user.save()
+
         return user
