@@ -137,7 +137,7 @@ class Summarizer(APIView):
 class GetTranscript(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request,slug=None):
+    def get(self, request,slug=None):
         # serializer = GetTranscriptSerializer(data=request.data)
         # if serializer.is_valid():
             # slug = serializer.validated_data['slug']
