@@ -43,13 +43,16 @@ def generate_questions(text : str) -> str:
     final_questions = []
 
     list_of_text = [one_video_transcript for one_video_transcript in text.split('$#@') if one_video_transcript]
-    for text in list_of_text:
-        print(type(text))
-        payload = {"transcript":text,"types":[0 , 1],"chunk_size":3000,'chunk_overlap':500}
-        response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
-        final_questions.append(response.json())
-    # print(response.json())
-    return final_questions
+    print(list_of_text)
+    
+    return {"key" , True}
+    # for text in list_of_text:
+    #     print(type(text))
+    #     payload = {"transcript":text,"types":[0 , 1],"chunk_size":3000,'chunk_overlap':500}
+    #     response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
+    #     final_questions.append(response.json())
+    # # print(response.json())
+    # return final_questions
 
 
 
