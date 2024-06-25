@@ -22,12 +22,10 @@ def get_course_transcripts(course_slug):
 
     return all_transcripts
 
-def get_module_transcripts(course_slug):
+def get_module_transcripts(module_slug):
 
-    course = Course.objects.get(slug=course_slug)    
+    modules = Module.objects.get(slug=module_slug).modules.all()
     video_content_type = ContentType.objects.get(model='video')
-
-    modules = course.modules.all()
 
     all_transcripts = ""
 
@@ -42,11 +40,8 @@ def get_module_transcripts(course_slug):
 
     return all_transcripts
 
-
 def generate_questions(module_slug : str) -> str:
-    transcripts = get_module_transcripts(module_slug)
-    print(transcripts)
-
+    pass
 
 
 def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
