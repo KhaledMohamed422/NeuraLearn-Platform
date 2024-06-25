@@ -41,6 +41,7 @@ def get_module_transcripts(module_slug):
 
 def generate_questions(text : str) -> str:
     final_questions = []
+    print(text)
     list_of_text = [text for text in text.split('$#@') if text]
     for text in list_of_text:
         payload = {"transcript":text,"types":[0 , 1],"chunk_size":3000,'chunk_overlap':500}
