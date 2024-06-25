@@ -44,8 +44,8 @@ def generate_questions(text : str) -> str:
 
     list_of_text = [text for text in text.split('$#@') if text]
     for text in list_of_text:
-        print(text)
-        print("*"*50)
+        # print(text)
+        # print("*"*50)
         payload = {"transcript":text,"types":[0 , 1],"chunk_size":3000,'chunk_overlap':500}
         response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
         final_questions.append(response.json())
