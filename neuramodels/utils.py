@@ -31,9 +31,9 @@ def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     
     context = get_course_transcripts(course_slug)
 
-    print(type(context))
-    if not context:
-        context = "None Context"
+    # print(type(context))
+    # if not context:
+    #     context = "None Context"
     payload = {
     "context": "None Context",
     "question": question,
