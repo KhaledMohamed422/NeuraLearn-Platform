@@ -40,7 +40,7 @@ def get_module_transcripts(module_slug):
     return all_transcripts
 
 def generate_questions(text : str) -> str:
-    payload = {"transcript":text,"types":[1 , 2 ,3],"chunk_size":3000,'chunk_overlap':500}
+    payload = {"transcript":text,"types":[0 , 1],"chunk_size":3000,'chunk_overlap':500}
     response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/QuestionGeneration", json=payload)
     print(response.json())
     return response.json()
