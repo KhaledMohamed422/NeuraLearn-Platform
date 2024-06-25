@@ -129,7 +129,7 @@ class Summarizer(APIView):
 #         return Response(data, status=status.HTTP_200_OK)
 
 @extend_schema(
-    tags=['Question Generation'],
+    tags=['Question Generation','Summarizer'],
     # request=GetTranscriptSerializer,
     responses={200: dict}
 )
