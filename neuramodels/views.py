@@ -16,7 +16,8 @@ from .serializers import (VideoTranscriptSerializer,
                           Transcripts ,
                           GetTranscriptSerializer,
                           ChatBotRequestSerializer,
-                          ChatBotResponseSerializer)
+                          ChatBotResponseSerializer,
+                          QuestionGenerationSerializer,)
 from .utils import generate_questions , generate_answer , get_module_transcripts
 
 URL = settings.SUMMARIZER_MODEL_URL
@@ -150,8 +151,25 @@ class GetTranscript(APIView):
             return Response("module not exist", status=status.HTTP_400_BAD_REQUEST)
 
 @extend_schema(
+    tags=['Question Generation'],
+    request=Transcripts,
+    responses=QuestionGenerationSerializer
+)
+class QuestionGenerationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request,slug=None):
+        serializer = Transcripts(data=request.data)
+        if serializer.is_valid():
+            text = serializer.validated_data['text']
+            questions_generation = generate_questions(text)
+            return Response({"responses": questions_generation}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@extend_schema(
     tags=['Question Answer (chatbot)'],
-    request=ChatBotRequestSerializer,
+    request=QuestionGenerationSerializer,
     responses={200: ChatBotResponseSerializer(many=True)}
 )
 class ChatBotAPIView(APIView):
