@@ -15,9 +15,11 @@ class SummarizerSerializer(serializers.Serializer):
 class GetTranscriptSerializer(serializers.Serializer):
     slug = serializers.CharField(max_length=5000)
 
-class QuestionGenerationSerializer(serializers.Serializer):
-    req = serializers.CharField(max_length=5000)
+# class QuestionGenerationSerializer(serializers.Serializer):
+#     response = serializers.CharField(max_length=5000)
 
+class QuestionGenerationSerializer(serializers.Serializer):
+    slug = serializers.CharField(max_length=5000)
 
 class ChatBotRequestSerializer(serializers.Serializer):
     slug = serializers.CharField(max_length=5000)

@@ -152,8 +152,8 @@ class GetTranscript(APIView):
 
 @extend_schema(
     tags=['Question Generation'],
-    request=Transcripts,
-    responses=QuestionGenerationSerializer
+    request=Transcripts
+    # responses=QuestionGenerationSerializer
 )
 class QuestionGenerationView(APIView):
     permission_classes = [IsAuthenticated]
