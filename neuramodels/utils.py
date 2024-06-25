@@ -30,9 +30,9 @@ def generate_questions(text : str) -> str:
 def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     
     context = get_course_transcripts(course_slug)
-    print(context)
+    print(type(context))
     if not context:
-        context = "None"
+        context = "None Context"
     payload = {
     "context": context,
     "question": question,
@@ -41,7 +41,7 @@ def generate_answer(course_slug,question,chat_history=[],k=3) -> dict:
     "chat_history": chat_history,
     "do_spilting": True,
     "add_to_history": True,
-    "chunk_size": 400,
+    "chunk_size": 400,  
     "chunk_overlap":50
     }
     response = requests.post(url=f"{SERVER_MODEL_URL}/neuarlearn/ml/chat", json=payload)
