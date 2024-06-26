@@ -19,6 +19,9 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         user.is_instructor = is_instructor
         user.is_student = is_student
         user.save()
+        print(user)
+        print(is_student)
+        print(is_instructor)
 
         # Add the user to the 'instructor' group if is_instructor is True
         if is_instructor:
